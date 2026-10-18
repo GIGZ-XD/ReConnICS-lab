@@ -1,0 +1,21 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "loopback-modbus.pcap",
+    "pcapSha256" : "ffe52349c47f4bf4add1e142408dd4441a172a1013d87be583c3958453eaa57a",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-17T06:23:34.992339047Z"
+  },
+  "assets" : [ {
+    "id" : "00:00:00:00:00:00",
+    "ip" : "127.0.0.1",
+    "mac" : "00:00:00:00:00:00",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 4,
+      "lastFrame" : 6,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  } ]
+}

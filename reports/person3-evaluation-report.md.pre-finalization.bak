@@ -1,0 +1,79 @@
+# ReConICS — Person 3 Evaluation Report
+
+**Role:** Lab, Ground Truth & Evaluation  
+**Environment:** Fedora Linux; Java 21/Maven  
+**Evaluation date:** 2026-10-17  
+**Status:** Initial controlled evaluation complete; isolated GRFICS/OpenPLC Modbus exchange captured.
+
+## 1. Objective
+
+Establish repeatable Modbus/TCP test evidence, compare known traffic with ReConICS inventory output, and document parser-test coverage and evaluation gaps.
+
+## 2. Test environment and artifacts
+
+Artifacts are stored in the separate workspace:
+
+`/run/media/gigz/New Volume1/Projects/2026/ReConnICS-lab`
+
+The first three packet captures were generated using local loopback traffic (`127.0.0.1`) and controlled test servers. The additional GRFICS/OpenPLC capture is from the isolated simulator network, not a physical PLC or production OT network.
+
+| Test | Capture | Ground truth | Observed result |
+|---|---|---|---|
+| GT-003 | `captures/loopback-modbus.pcap` | FC3 read of two registers, values 123 and 456 | ReConICS recognized Modbus; inventory recorded the loopback endpoint. No device identity was expected. |
+| GT-010 | `captures/modbus-exception.pcap` | FC3 request receives exception code 2 (Illegal Data Address) | Packet-level decode confirmed the exception. ReConICS recognized Modbus, but its asset inventory did not expose the exception code. |
+| GT-009 | `captures/modbus-identity.pcap` | FC43/14 identity response: vendor Acme, model PLC-1, firmware 1.2.3 | ReConICS decoded all three fields at HIGH confidence, with evidence tied to frame 6. |
+| GT-011 | `captures/grfics-plc-focused.pcap` | GRFICS/OpenPLC FC3 read of registers 0 and 1 | TShark confirmed transaction `0x6003` and observed values `[0, 0]` in the two-packet capture. |
+| GT-012 | `captures/grfics-plc-focused.pcap` + `results/grfics-plc-focused-reconnics.json` | ReConICS endpoint inventory compared with TShark ground truth | ReConICS emitted two Modbus-tagged endpoints (`192.168.95.2` and `192.168.95.45`), both `HEADER_VALIDATED`; it did not expose PLC/client roles or register values. |
+
+## 3. Capture integrity
+
+| Capture | Packets | SHA-256 |
+|---|---:|---|
+| `loopback-modbus.pcap` | 10 | `ffe52349c47f4bf4add1e142408dd4441a172a1013d87be583c3958453eaa57a` |
+| `modbus-exception.pcap` | 10 | `a0e6eb840f0be6e3edeb4c43f51f0007f6112ad891a3875c0c700d4ab6ea0b86` |
+| `modbus-identity.pcap` | 10 | `c800ceb73a8162c63ab49d2ff8a7fdb12ef591d7eeb6ce30a86004bc87ecdecb` |
+| `grfics-plc-focused.pcap` | 2 | `9999a10f747e56f974f584fba5ac191d25d9322de54697b9d6250064f938951b` |
+| `grfics-plc-focused-reconnics.json` | JSON output | `d78d1d67b40aed94c93daea81f32e3924139cf1f3c7fe8ef80d8f5521f9fdd8b` |
+
+All three ReConICS inventory outputs were successfully parsed as JSON. The identity inventory contains the three expected identity values.
+
+Loopback captures show a zero MAC address; this is a loopback artifact and must not be treated as a real device identifier.
+
+## 4. Automated tests
+
+The repository's Maven test suite previously completed successfully with **67 tests, 0 failures, 0 errors, and 0 skipped**.
+
+Two additional Modbus identity parser tests cover:
+- An excessive identity-object count.
+- A truncated FC43/14 message.
+
+The tests verify safe classification and absence of decoded identity fields for these cases. The changes are recorded in commit `aab51f8` (`test: cover malformed Modbus identity responses`).
+
+## 5. Ground-truth matrix
+
+The CSV matrix is:
+
+`ground-truth/evaluation-matrix.csv`
+
+It contains GT-001 through GT-012. GT-008 covers malformed-input unit tests; GT-009 records successful identity decoding; GT-010 records the exception-response capture and the missing exception detail in inventory output; GT-011 records the isolated GRFICS/OpenPLC register read; GT-012 records ReConICS analysis of that capture.
+
+## 6. Findings and limitations
+
+1. The controlled FC43/14 response demonstrates successful decoding of vendor, model, and firmware.
+2. The exception capture demonstrates that Modbus traffic is recognized, but exception-code visibility is a current evaluation gap in the asset inventory output.
+3. Unit tests and loopback captures do not establish performance against physical PLCs or representative production OT traffic.
+4. The current captures exercise Modbus/TCP only; additional protocol and end-to-end coverage is still needed.
+5. The isolated GRFICS/OpenPLC setup returned a valid Modbus FC3 response. Registers 0 and 1 were observed as `[0, 0]`; the intended process values have not been independently verified.
+6. On the focused simulator capture, ReConICS emitted two Modbus-tagged endpoints using `HEADER_VALIDATED`. The output does not distinguish the PLC from the client or expose the observed register values; this is protocol-level endpoint detection, not full device identification.
+
+## 7. Next steps
+
+1. Inspect the PLC program or simulator configuration to establish what registers 0 and 1 are intended to represent.
+2. Investigate whether Modbus exception details should be represented in the inventory or evaluation output.
+3. Expand simulator-backed coverage to additional supported protocols and scenarios.
+4. Test richer captures that include a TCP handshake and multiple Modbus transactions.
+5. Preserve exact commands, versions, capture hashes, and test outcomes for reproducibility.
+
+## 8. Safety boundary
+
+Testing to date used loopback traffic. Any simulator deployment must remain isolated from the live LAN and must not expose OT services externally. Existing GRFICS network settings must be reviewed before use.

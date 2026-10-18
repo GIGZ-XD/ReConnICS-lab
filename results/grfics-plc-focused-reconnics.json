@@ -1,0 +1,31 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "grfics-plc-focused.pcap",
+    "pcapSha256" : "9999a10f747e56f974f584fba5ac191d25d9322de54697b9d6250064f938951b",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-17T10:01:57.620776484Z"
+  },
+  "assets" : [ {
+    "id" : "7a:16:38:80:f3:6b",
+    "ip" : "192.168.95.2",
+    "mac" : "7a:16:38:80:f3:6b",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 1,
+      "lastFrame" : 1,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  }, {
+    "id" : "e6:a1:29:a6:33:75",
+    "ip" : "192.168.95.45",
+    "mac" : "e6:a1:29:a6:33:75",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 2,
+      "lastFrame" : 2,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  } ]
+}

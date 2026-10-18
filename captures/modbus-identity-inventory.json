@@ -1,0 +1,36 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "modbus-identity.pcap",
+    "pcapSha256" : "c800ceb73a8162c63ab49d2ff8a7fdb12ef591d7eeb6ce30a86004bc87ecdecb",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-17T09:02:02.171559308Z"
+  },
+  "assets" : [ {
+    "id" : "00:00:00:00:00:00",
+    "ip" : "127.0.0.1",
+    "mac" : "00:00:00:00:00:00",
+    "protocols" : [ "modbus" ],
+    "vendor" : {
+      "value" : "Acme",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 6, txn 3, unit=1 conformity=0x1 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "PLC-1",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 6, txn 3, unit=1 conformity=0x1 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "1.2.3",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 6, txn 3, unit=1 conformity=0x1 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 4,
+      "lastFrame" : 6,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ]
+    }
+  } ]
+}

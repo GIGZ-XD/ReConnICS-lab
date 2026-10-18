@@ -1,0 +1,21 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "modbus-exception.pcap",
+    "pcapSha256" : "a0e6eb840f0be6e3edeb4c43f51f0007f6112ad891a3875c0c700d4ab6ea0b86",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-17T08:58:34.891258742Z"
+  },
+  "assets" : [ {
+    "id" : "00:00:00:00:00:00",
+    "ip" : "127.0.0.1",
+    "mac" : "00:00:00:00:00:00",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 4,
+      "lastFrame" : 6,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  } ]
+}
