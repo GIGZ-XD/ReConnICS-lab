@@ -6,6 +6,29 @@
   "cell2.pcap",
   "sup.pcap"
  ],
+ "events": [
+  {
+   "t": 15,
+   "do": "sweep"
+  },
+  {
+   "t": 40,
+   "do": "firmware",
+   "device": "plc-l33er",
+   "down_s": 5,
+   "cip": {
+    "rev": [
+     24,
+     11
+    ]
+   },
+   "firmware": "24.011"
+  },
+  {
+   "t": 65,
+   "do": "sweep"
+  }
+ ],
  "devices": [
   {
    "id": "10.10.1.10",
@@ -52,9 +75,16 @@
    "kind": "enip",
    "vendor": "Rockwell Automation",
    "model": "1769-L33ER",
-   "firmware": "20.011",
+   "firmware": "24.011",
    "serial": "60E1F4A2",
-   "role": "plc"
+   "role": "plc",
+   "firmware_initial": "20.011",
+   "firmware_history": [
+    {
+     "t": 47.1,
+     "firmware": "24.011"
+    }
+   ]
   },
   {
    "id": "10.10.2.11",
