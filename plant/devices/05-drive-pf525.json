@@ -1,0 +1,29 @@
+{
+ "name": "drive-pf525",
+ "seg": "cell2",
+ "host": 11,
+ "oui": "rockwell",
+ "kind": "enip",
+ "process": {
+  "unit": "conveyor"
+ },
+ "cip": {
+  "vendor": 1,
+  "devtype": 2,
+  "pc": 144,
+  "rev": [
+   5,
+   1
+  ],
+  "serial": 3229229588,
+  "status": 100,
+  "name": "PowerFlex 525 1P 240V 2.2kW"
+ },
+ "truth": {
+  "vendor": "Rockwell Automation",
+  "model": "PowerFlex 525",
+  "firmware": "5.001",
+  "serial": "C07A2214",
+  "role": "drive"
+ }
+}

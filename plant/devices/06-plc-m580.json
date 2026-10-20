@@ -1,0 +1,24 @@
+{
+ "name": "plc-m580",
+ "seg": "cell2",
+ "host": 12,
+ "oui": "schneider",
+ "kind": "modbus",
+ "process": {
+  "unit": "tank"
+ },
+ "ident": {
+  "VendorName": "Schneider Electric",
+  "ProductCode": "BMEP582040",
+  "MajorMinorRevision": "V2.70",
+  "VendorUrl": "www.se.com",
+  "ProductName": "Modicon M580",
+  "ModelName": "BMEP582040"
+ },
+ "truth": {
+  "vendor": "Schneider Electric",
+  "model": "BMEP582040",
+  "firmware": "2.70",
+  "role": "plc"
+ }
+}
