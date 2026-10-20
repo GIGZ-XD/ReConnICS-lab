@@ -1,0 +1,161 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "cell1.pcap",
+    "pcapSha256" : "508f974038939e835e11a7765d4c132e1a4f4056df2d48bc535eb3aea393bf20",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-20T18:06:16.706544500Z",
+    "tcpReassembly" : {
+      "segments" : 708,
+      "pdus" : 708,
+      "retransmittedBytes" : 0,
+      "unframedSegments" : 0,
+      "gapsSkipped" : 0,
+      "overflowResets" : 0,
+      "flowsEvicted" : 0
+    }
+  },
+  "assets" : [ {
+    "id" : "10.10.1.1",
+    "ip" : "10.10.1.1",
+    "mac" : "00:1a:a1:00:00:01",
+    "protocols" : [ ],
+    "attributes" : {
+      "firstFrame" : 1,
+      "lastFrame" : 27,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  }, {
+    "id" : "10.10.1.10",
+    "ip" : "10.10.1.10",
+    "mac" : "00:80:f4:00:00:0a",
+    "protocols" : [ "modbus" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 100, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "TM221CE16R",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 100, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V1.5.0.1",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 593, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 2,
+      "lastFrame" : 1112,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself" ]
+    }
+  }, {
+    "id" : "10.10.1.11",
+    "ip" : "10.10.1.11",
+    "mac" : "00:80:f4:00:00:0b",
+    "protocols" : [ "modbus" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 112, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "BMXP342020",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 112, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V2.10",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 605, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 7,
+      "lastFrame" : 1115,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself" ]
+    }
+  }, {
+    "id" : "10.10.1.12",
+    "ip" : "10.10.1.12",
+    "mac" : "00:1b:1b:00:00:0c",
+    "protocols" : [ "s7comm" ],
+    "vendor" : {
+      "value" : "Siemens",
+      "confidence" : "MEDIUM",
+      "evidence" : "s7comm SZL 0x0011 Module Identification vendor from S7 context, frame 129, txn pduRef=256"
+    },
+    "model" : {
+      "value" : "6ES7 315-2EH14-0AB0",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x0011 Module Identification index=0x0001 entry=0, frame 129, txn pduRef=256, MlfB (order number)"
+    },
+    "firmware" : {
+      "value" : "V3.2.6",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x0011 Module Identification index=0x0007 entry=2, frame 619, txn pduRef=256, Ausbg/Ausbe basic firmware"
+    },
+    "hostname" : {
+      "value" : "CPU 315-2 PN/DP",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0002, frame 131, txn pduRef=512, module name, entry=1"
+    },
+    "serial" : {
+      "value" : "S C-C2UR28922012",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0005, frame 131, txn pduRef=512, serial number, entry=4"
+    },
+    "deviceType" : {
+      "value" : "s7:CPU 315-2 PN/DP",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0007, frame 131, txn pduRef=512, module type name, entry=5"
+    },
+    "attributes" : {
+      "firstFrame" : 28,
+      "lastFrame" : 1118,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "serialNumbers" : [ "S C-C2UR28922012" ]
+    }
+  }, {
+    "id" : "10.10.3.20",
+    "ip" : "10.10.3.20",
+    "protocols" : [ "s7comm", "modbus" ],
+    "attributes" : {
+      "firstFrame" : 33,
+      "lastFrame" : 1118,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "server",
+      "roles" : [ "client", "server" ],
+      "mergeNotes" : [ "MAC 00:1a:a1:00:00:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.3.21",
+    "ip" : "10.10.3.21",
+    "protocols" : [ "modbus", "s7comm" ],
+    "attributes" : {
+      "firstFrame" : 98,
+      "lastFrame" : 621,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "server",
+      "roles" : [ "client", "server" ],
+      "mergeNotes" : [ "MAC 00:1a:a1:00:00:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.3.22",
+    "ip" : "10.10.3.22",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 17,
+      "lastFrame" : 1073,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:00:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  } ]
+}
