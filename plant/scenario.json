@@ -1,0 +1,9 @@
+{
+ "_note": "Demo storyline. t = seconds since the plant epoch (capture start). The firmware change goes 20.011 -> 24.011, which stays inside the advisory range (<=27.011) so the exposure persists. Boot (servers up, gratuitous ARP from every device, HMI/historian polling) is implicit. do=sweep: EWS identity sweep of every PLC/drive. do=firmware|reboot: device goes down for 'down_s', returns with patched identity (firmware only), announces itself with gratuitous ARP; HMI reconnects.",
+ "duration": 90,
+ "events": [
+  {"t": 15, "do": "sweep"},
+  {"t": 40, "do": "firmware", "device": "plc-l33er", "down_s": 5, "cip": {"rev": [24, 11]}, "firmware": "24.011"},
+  {"t": 65, "do": "sweep"}
+ ]
+}
