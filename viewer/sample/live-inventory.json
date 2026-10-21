@@ -1,0 +1,351 @@
+{
+ "inventory": {
+  "schema": 1,
+  "tool": "ReConICS inventory",
+  "summary": {
+   "assets": 12,
+   "meanFilled": 5.6,
+   "of": 14,
+   "passiveMax": 9,
+   "ouiLookup": "run",
+   "matcher": "run, index signature verified",
+   "index": {
+    "generated": "2026-10-12T16:48:22.980833100Z",
+    "kevCatalogVersion": "2026.10.08"
+   },
+   "kevAtModelAssets": 0,
+   "fillRate": {
+    "ip": "1.000",
+    "mac": "1.000",
+    "protocols": "0.750",
+    "ports": "0.500",
+    "role": "0.750",
+    "vendor": "0.500",
+    "model": "0.500",
+    "os": "0.500",
+    "hostname": "0.083",
+    "criticality": "0.000",
+    "asset_number": "0.000",
+    "location": "0.000",
+    "logging": "0.000",
+    "user_accounts": "0.000"
+   },
+   "matchLevels": {
+    "EXACT": 3,
+    "PROBABLE": 3,
+    "POSSIBLE": 0,
+    "NONE": 6
+   },
+   "matchCeilings": {
+    "EXACT": 6,
+    "PROBABLE": 0,
+    "POSSIBLE": 0,
+    "NONE": 6
+   },
+   "rejected": 0
+  },
+  "assets": [
+   {
+    "id": "10.10.1.10",
+    "firmware": {
+     "value": "V1.5.0.1",
+     "confidence": "HIGH",
+     "evidence": "modbus FC43/14 Read Device Identification objectId=0x02, frame 544, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "ip": {
+     "value": "10.10.1.10",
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-481"
+    },
+    "mac": {
+     "value": "00:80:f4:00:00:0a",
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-481"
+    },
+    "model": {
+     "value": "TM221CE16R",
+     "confidence": "HIGH",
+     "evidence": "modbus FC43/14 Read Device Identification objectId=0x01, frame 541, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "ports": {
+     "value": [
+      "502/tcp"
+     ],
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-481; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-567; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-904; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-1093"
+    },
+    "protocols": {
+     "value": [
+      "modbus"
+     ],
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-481; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 1-567; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-904; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-1093"
+    },
+    "role": {
+     "value": "ICS server/responder (inferred)",
+     "confidence": "LOW",
+     "evidence": "inferred from request/response direction"
+    },
+    "vendor": {
+     "value": "Schneider Electric",
+     "confidence": "HIGH",
+     "evidence": "modbus FC43/14 Read Device Identification objectId=0x00, frame 541, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "vendor_oui": {
+     "value": "Telemecanique Electrique",
+     "confidence": "LOW",
+     "evidence": "MAC OUI 00:80:f4 (IEEE MA-L); NIC maker, may differ from device maker"
+    },
+    "completeness": {
+     "filled": 8,
+     "of": 14,
+     "matchCeiling": "EXACT",
+     "missing": [
+      {
+       "attr": "hostname",
+       "fillBy": "passive",
+       "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+      },
+      {
+       "attr": "criticality",
+       "fillBy": "human",
+       "hint": "Plant engineer / process hazard analysis."
+      },
+      {
+       "attr": "asset_number",
+       "fillBy": "human",
+       "hint": "Asset register / CMMS."
+      },
+      {
+       "attr": "location",
+       "fillBy": "human",
+       "hint": "Site walkdown."
+      },
+      {
+       "attr": "logging",
+       "fillBy": "human",
+       "hint": "Device configuration review."
+      },
+      {
+       "attr": "user_accounts",
+       "fillBy": "human",
+       "hint": "Device configuration review."
+      }
+     ]
+    },
+    "match": {
+     "level": "PROBABLE",
+     "kevAtModel": false,
+     "maxCvss": 10,
+     "advisories": [
+      {
+       "advisory": "ICSA-17-103-02A",
+       "title": "Schneider Electric Modicon M221 PLCs and SoMachine Basic (Update A)",
+       "level": "PROBABLE",
+       "affected": "<= 1.5.0.1",
+       "cves": [
+        "CVE-2017-7574",
+        "CVE-2017-7575"
+       ],
+       "kev": [],
+       "cvss": 10
+      },
+      {
+       "advisory": "ICSA-18-324-02",
+       "title": "Schneider Electric Modicon M221",
+       "level": "PROBABLE",
+       "affected": "vers:all/*",
+       "cves": [
+        "CVE-2018-7798"
+       ],
+       "kev": [],
+       "cvss": 8.2
+      },
+      {
+       "advisory": "ICSA-18-240-01",
+       "title": "Schneider Electric Modicon M221",
+       "level": "PROBABLE",
+       "affected": "< 1.6.2.0",
+       "cves": [
+        "CVE-2018-7790",
+        "CVE-2018-7791",
+        "CVE-2018-7792"
+       ],
+       "kev": [],
+       "cvss": 7.7
+      },
+      {
+       "advisory": "ICSA-20-343-04",
+       "title": "Schneider Electric Modicon M221 Programmable Logic Controller",
+       "level": "PROBABLE",
+       "affected": "vers:all/*",
+       "cves": [
+        "CVE-2020-28214",
+        "CVE-2020-7565",
+        "CVE-2020-7566",
+        "CVE-2020-7567",
+        "CVE-2020-7568"
+       ],
+       "kev": [],
+       "cvss": 7.1
+      },
+      {
+       "advisory": "ICSA-18-240-02",
+       "title": "Schneider Electric Modicon M221",
+       "level": "PROBABLE",
+       "affected": "<1.6.2.0",
+       "cves": [
+        "CVE-2018-7789"
+       ],
+       "kev": [],
+       "cvss": 4.8
+      }
+     ]
+    }
+   },
+   {
+    "id": "10.10.2.10",
+    "deviceType": {
+     "value": "cip:0x0E",
+     "confidence": "HIGH",
+     "evidence": "ethernet-ip ListIdentity deviceType=14, frame 573, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+    },
+    "firmware": {
+     "value": "24.011",
+     "confidence": "MEDIUM",
+     "evidence": "ethernet-ip CIP Get_Attributes_All Identity revision, frame 584, txn session=3611947963 request frame 583, productCode=104; also saw \"20.011\" (HIGH, ethernet-ip CIP Get_Attributes_All Identity revision, frame 179, txn session=1932520136 request frame 178, productCode=104)",
+     "conflict": true
+    },
+    "ip": {
+     "value": "10.10.2.10",
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-442"
+    },
+    "mac": {
+     "value": "00:00:bc:00:01:0a",
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-442"
+    },
+    "model": {
+     "value": "1769-L33ER/A LOGIX5333ER",
+     "confidence": "HIGH",
+     "evidence": "ethernet-ip ListIdentity productName, frame 573, txn session=0, deviceType=14 productCode=104"
+    },
+    "ports": {
+     "value": [
+      "44818/tcp",
+      "44818/udp"
+     ],
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-442; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-529; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 65-916; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 21-1102"
+    },
+    "protocols": {
+     "value": [
+      "ethernet-ip"
+     ],
+     "confidence": "MEDIUM",
+     "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 3-442; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-529; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 65-916; reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 21-1102"
+    },
+    "role": {
+     "value": "PLC",
+     "confidence": "HIGH",
+     "evidence": "from device type cip:0x0E (ethernet-ip ListIdentity deviceType=14, frame 573, txn session=0, CIP Identity attribute 2 (ODVA device profile))"
+    },
+    "serial": {
+     "value": "60E1F4A2",
+     "confidence": "HIGH",
+     "evidence": "ethernet-ip ListIdentity serialNumber, frame 573, txn session=0, 0x60e1f4a2"
+    },
+    "vendor": {
+     "value": "Rockwell Automation",
+     "confidence": "HIGH",
+     "evidence": "ethernet-ip ListIdentity vendorId=1, frame 573, txn session=0, mapped from ODVA CIP Vendor ID table"
+    },
+    "vendor_oui": {
+     "value": "Rockwell Automation",
+     "confidence": "LOW",
+     "evidence": "MAC OUI 00:00:bc (IEEE MA-L); NIC maker, may differ from device maker"
+    },
+    "completeness": {
+     "filled": 8,
+     "of": 14,
+     "matchCeiling": "EXACT",
+     "missing": [
+      {
+       "attr": "hostname",
+       "fillBy": "passive",
+       "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+      },
+      {
+       "attr": "criticality",
+       "fillBy": "human",
+       "hint": "Plant engineer / process hazard analysis."
+      },
+      {
+       "attr": "asset_number",
+       "fillBy": "human",
+       "hint": "Asset register / CMMS."
+      },
+      {
+       "attr": "location",
+       "fillBy": "human",
+       "hint": "Site walkdown."
+      },
+      {
+       "attr": "logging",
+       "fillBy": "human",
+       "hint": "Device configuration review."
+      },
+      {
+       "attr": "user_accounts",
+       "fillBy": "human",
+       "hint": "Device configuration review."
+      }
+     ]
+    },
+    "match": {
+     "level": "EXACT",
+     "kevAtModel": false,
+     "maxCvss": 6.1,
+     "advisories": [
+      {
+       "advisory": "ICSA-16-061-02",
+       "title": "Rockwell Automation Allen-Bradley CompactLogix Reflective Cross-Site Scripting Vulnerability (Update A)",
+       "level": "EXACT",
+       "affected": "<=27.011",
+       "cves": [
+        "CVE-2016-2279"
+       ],
+       "kev": [],
+       "cvss": 6.1
+      },
+      {
+       "advisory": "ICSA-13-011-03",
+       "title": "Rockwell Automation ControlLogix PLC Vulnerabilities",
+       "level": "PROBABLE",
+       "affected": "vers:all/*",
+       "cves": [
+        "CVE-2012-6435",
+        "CVE-2012-6436",
+        "CVE-2012-6437",
+        "CVE-2012-6438",
+        "CVE-2012-6439",
+        "CVE-2012-6440",
+        "CVE-2012-6441",
+        "CVE-2012-6442"
+       ],
+       "kev": [],
+       "cvss": 10
+      }
+     ]
+    }
+   }
+  ],
+  "rejected": []
+ },
+ "rank": [
+  "10.10.2.10",
+  "10.10.1.10"
+ ],
+ "site": {}
+}

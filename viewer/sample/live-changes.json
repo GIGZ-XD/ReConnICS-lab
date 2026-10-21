@@ -1,0 +1,29 @@
+[
+ {
+  "at": "2026-10-21T07:13:52.655693600Z",
+  "actor": "plant-feed",
+  "asset": "10.10.2.10",
+  "field": "firmware",
+  "from": "20.011",
+  "to": "24.011",
+  "source": "capture c0006"
+ },
+ {
+  "at": "2026-10-21T07:13:52.541693700Z",
+  "actor": "plant-feed",
+  "asset": "10.10.2.10",
+  "field": "(asset)",
+  "from": "",
+  "to": "not seen in cell1-after.pcap",
+  "source": "capture c0004"
+ },
+ {
+  "at": "2026-10-21T07:12:36.591134700Z",
+  "actor": "plant-feed",
+  "asset": "10.10.2.10",
+  "field": "(asset)",
+  "from": "",
+  "to": "new in cell2-before.pcap",
+  "source": "capture c0002"
+ }
+]

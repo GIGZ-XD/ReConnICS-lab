@@ -7,12 +7,12 @@ import { createDemo } from './demo.js';
 export function startFeed({ mode, wsUrl, replayUrl }, { onMessage, onStatus, onReset }) {
   let ws, retry, demo, live = false, closed = false, replayShown = false;
   const emit = (src, msg) => onMessage(msg, src);
-  const status = (kind, text) => onStatus({ kind, text });
+  const status = (kind, text, title = '') => onStatus({ kind, text, title });
 
   function startDemo() {
     if (demo) return;
     demo = createDemo(m => emit('demo', m), () => onReset('demo'));
-    demo.start(); status('demo', 'DEMO DATA');
+    demo.start(); status('demo', 'Demo data', 'Built-in simulator, no plant feed found');
   }
   const stopDemo = () => { demo?.stop(); demo = null; };
 
@@ -21,23 +21,23 @@ export function startFeed({ mode, wsUrl, replayUrl }, { onMessage, onStatus, onR
     let opened = false;
     try { ws = new WebSocket(wsUrl); } catch { return fallback(); }
     const giveUp = setTimeout(() => { if (!opened) ws.close(); }, 2500);
-    ws.onopen = () => { opened = live = true; replayShown = false; clearTimeout(giveUp); stopDemo(); onReset('live'); status('live', 'LIVE ' + wsUrl); };
+    ws.onopen = () => { opened = live = true; replayShown = false; clearTimeout(giveUp); stopDemo(); onReset('live'); status('live', 'Live', wsUrl); };
     ws.onmessage = e => {
       let m; try { m = JSON.parse(e.data); } catch { return; }
       emit('live', m);
-      if (m.replay && !replayShown) { replayShown = true; status('replay', 'REPLAY (plant feed.py) ' + wsUrl); }
+      if (m.replay && !replayShown) { replayShown = true; status('replay', 'Replay', 'plant feed.py replay on ' + wsUrl); }
     };
     ws.onclose = () => { clearTimeout(giveUp); live = false; fallback(); };
     ws.onerror = () => {};
   }
   function fallback() {
     if (closed) return;
-    if (mode === 'auto') startDemo(); else status('wait', 'No feed at ' + wsUrl + ' - retrying');
+    if (mode === 'auto') startDemo(); else status('wait', 'No feed', 'No feed at ' + wsUrl + ' - retrying');
     retry = setTimeout(connect, mode === 'auto' ? 6000 : 2000);
   }
 
   async function replay() {
-    status('replay', 'REPLAY ' + replayUrl);
+    status('replay', 'Replay', replayUrl);
     const res = await fetch(replayUrl);
     const text = replayUrl.endsWith('.gz') && !res.headers.get('content-encoding')           // .jsonl.gz as recorded by plant.py --record
       ? await new Response(res.body.pipeThrough(new DecompressionStream('gzip'))).text() : await res.text();

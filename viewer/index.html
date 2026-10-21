@@ -15,6 +15,7 @@
 <header id="top">
   <h1>ReConnICS <span>3D plant</span></h1>
   <span id="badge" class="badge wait" role="status">connecting...</span>
+  <span id="rcChip" class="chip" role="status" hidden></span>
   <nav id="presets" aria-label="Camera presets">
     <button data-view="overview" title="Key 1">Overview</button>
     <button data-view="cell1" title="Key 2">Cell 1</button>
@@ -30,10 +31,9 @@
     <li><i class="id"></i>Identity request</li>
   </ul>
 </header>
-<aside id="devlist" aria-label="Devices"><h2>Devices</h2><ul id="devbtns"></ul>
-  <p class="hint">Click a device in 3D or pick it here. Keys: 1-5 views, L labels, Esc deselect, Up/Down in list.</p></aside>
+<aside id="devlist" aria-label="Devices"><div id="devbtns"></div></aside>
 <main id="stage"><div id="view"></div><ol id="events" aria-live="polite" aria-label="Plant events"></ol></main>
-<aside id="panel" aria-live="polite"><p class="hint">Select a device.</p></aside>
+<aside id="panel" aria-live="polite"><p class="empty">Select a device</p></aside>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>
