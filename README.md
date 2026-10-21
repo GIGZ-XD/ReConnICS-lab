@@ -15,6 +15,7 @@ a field on these captures, the gap is in the tool, not the data.
 | [`viewer/`](viewer/README.md) | 3D plant viewer (Three.js, static files): live, replay or demo mode, ReConnICS side-by-side |
 | `captures/plant/`, `results/plant/` | Committed output of the demo run: pcaps, truth file, ReConnICS-ng results |
 | `captures/`, `ground-truth/`, `notes/`, `reports/`, `results/`, `tools/` | Earlier evaluation material: loopback Modbus demos and GRFICS captures (Modbus reads/writes only, no identity exchanges) |
+| `GRFICSv3` | A gitlink to a GRFICSv3 commit with no `.gitmodules` entry, so it does not check out; kept for reference |
 
 ## The plant
 
