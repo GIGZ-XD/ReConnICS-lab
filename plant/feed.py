@@ -8,6 +8,7 @@ stdlib only (own minimal RFC 6455 server, send-only), so it runs in WSL next to 
   replay a recorded run:       python plant/feed.py --replay plant/demo-run.jsonl.gz [--loop] [--port 8765]
   ... and feed ReConnICS-ng:   add --reconnics http://127.0.0.1:8088 (POSTs captures/plant/*-before.pcap ~5 s after the first
                                scenario sweep and *-after.pcap ~5 s after the last one, as replay time passes them)
+  pause / speed (replay only): clients send {"cmd":"pause"} {"cmd":"play"} {"cmd":"speed","x":0.5|1|2}; every frame carries paused, speed
   upload after a live run:     python plant/feed.py --upload-only --reconnics http://127.0.0.1:8088
 """
 import argparse, base64, gzip, hashlib, json, os, socket, socketserver, struct, subprocess, sys, threading, time
@@ -17,11 +18,14 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import process
 
 WS_GUID = b"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
+SPEEDS = (0.5, 1, 2)                                           # replay speeds a client may ask for
+MAX_CLIENT_FRAME = 4096                                        # control messages are tiny; a bigger frame closes the connection
 
 
 class Feed:
     def __init__(self, port=8765, host="0.0.0.0"):
         self.addr, self.clients, self.lock, self.latest = (host, port), [], threading.Lock(), b"{}"
+        self.on_control = None                                 # replay() sets it; None (live plant) = control messages are ignored
 
     def start(self):
         feed = self
@@ -57,24 +61,41 @@ class Feed:
         s.settimeout(None)
         with self.lock:
             self.clients.append(s)
-        try:                                                   # we only send; read to notice close and answer ping
+        try:                                                   # we mostly send; read to notice close, answer ping, take control messages
             while True:
                 b0, b1 = self._rx(s, 2)
                 n = b1 & 0x7F
                 n = struct.unpack(">H", self._rx(s, 2))[0] if n == 126 else struct.unpack(">Q", self._rx(s, 8))[0] if n == 127 else n
-                mask = self._rx(s, 4) if b1 & 0x80 else b"\0" * 4
-                data = self._rx(s, n)
-                if b0 & 0x0F == 8:
-                    return
-                if b0 & 0x0F == 9:
+                if n > MAX_CLIENT_FRAME:
+                    return                                     # oversized: drop the client rather than buffer it
+                mask = self._rx(s, 4) if b1 & 0x80 else b"\0" * 4   # RFC 6455: client frames are masked
+                data = bytes(x ^ mask[i % 4] for i, x in enumerate(self._rx(s, n)))
+                op = b0 & 0x0F
+                if op == 8:                                    # close: echo it, then hang up
                     with self.lock:
-                        s.sendall(self._frame(10, bytes(x ^ mask[i % 4] for i, x in enumerate(data))))
+                        s.sendall(self._frame(8, data[:2]))
+                    return
+                if op == 9:
+                    with self.lock:
+                        s.sendall(self._frame(10, data))
+                elif op == 1 and b0 & 0x80:                    # one complete text message (fragments are ignored)
+                    self._control(data)
         except (OSError, EOFError):
             pass
         finally:
             with self.lock:
                 if s in self.clients:
                     self.clients.remove(s)
+
+    def _control(self, data):
+        """{"cmd":"pause"|"play"} or {"cmd":"speed","x":0.5|1|2}; anything else is ignored. Never raises."""
+        try:
+            m = json.loads(data.decode())
+            ok = m["cmd"] in ("pause", "play") or (m["cmd"] == "speed" and type(m.get("x")) in (int, float) and m["x"] in SPEEDS)
+            if ok and self.on_control:
+                self.on_control(m)
+        except Exception:                                      # bad JSON / wrong shape / callback trouble: drop the message, keep the feed
+            pass
 
     @staticmethod
     def _rx(s, n):
@@ -257,18 +278,69 @@ def upload_all(base, paths):
         upload(base, p)
 
 
-def replay(path, feed, loop=False, speed=1.0, reconnics=None):
+class Clock:
+    """Replay time in seconds: advances at `speed` x wall time, frozen while paused. Everything timed (frames, uploads) keys off it."""
+    def __init__(self, speed=1.0, now=time.monotonic):
+        self._now, self.pos, self.paused, self.speed, self.lock, self.changed = now, 0.0, False, speed, threading.Lock(), threading.Event()
+        self.w = now()
+
+    def get(self):
+        with self.lock:
+            return self.pos + (0 if self.paused else (self._now() - self.w) * self.speed)
+
+    def set(self, paused=None, speed=None):
+        with self.lock:
+            self.pos += 0 if self.paused else (self._now() - self.w) * self.speed
+            self.w = self._now()
+            self.paused = self.paused if paused is None else paused
+            self.speed = self.speed if speed is None else speed
+        self.changed.set()                                     # wakes replay() so it republishes the new state at once
+
+    def reset(self):
+        with self.lock:
+            self.pos, self.w = 0.0, self._now()
+
+
+def replay(path, feed, loop=False, speed=1.0, reconnics=None, clock=None):
     frames = [json.loads(l) for l in (gzip.open if path.endswith(".gz") else open)(path, "rt") if l.strip()]
     span = frames[-1]["t"] - frames[0]["t"] + 0.2
+    clock = clock or Clock(speed)
+    last = {}
+
+    def control(m):                                            # already validated by Feed._control
+        if m["cmd"] == "speed":
+            clock.set(speed=float(m["x"]))
+        else:
+            clock.set(paused=m["cmd"] == "pause")
+    feed.on_control = control
+
+    def publish(fr, **extra):
+        last.update(fr, replay=True, paused=clock.paused, speed=clock.speed, len=round(span, 1), **extra)
+        feed.publish(last)
+
+    def wait(target):                                          # block until replay time reaches `target`; paused: re-send the frame once a second
+        while True:
+            r = clock.get()
+            if r >= target and not clock.paused:
+                return
+            if clock.changed.is_set():                         # pause / play / speed from a client: show it everywhere now
+                clock.changed.clear()
+                if last:
+                    publish(dict(last), flows=[])
+            elif clock.paused and last:
+                publish(dict(last), flows=[])                  # new clients still get a frame; flows=[] so packets are not replayed
+            clock.changed.wait(1.0 if clock.paused else min(1.0, max(0.0, target - r) / clock.speed))
+
     n = 0
     while True:
-        t0, w0 = frames[0]["t"], time.time()
+        t0 = frames[0]["t"]
+        clock.reset()
         plan = upload_plan() if reconnics else []
         for fr in frames:
-            time.sleep(max(0, (fr["t"] - t0) / speed - (time.time() - w0)))
-            while plan and fr["t"] - t0 >= plan[0][0]:         # replay time passed a sweep (+ lag): hand the pcaps to the console
+            wait(fr["t"] - t0)
+            while plan and fr["t"] - t0 >= plan[0][0]:        # replay time passed a sweep (+ lag): hand the pcaps to the console
                 threading.Thread(target=upload_all, args=(reconnics, plan.pop(0)[1]), daemon=True).start()
-            feed.publish(dict(fr, t=round(fr["t"] + n * span, 3), replay=True))
+            publish(fr, t=round(fr["t"] + n * span, 3), pos=round(fr["t"] - t0, 1))
         n += 1
         if not loop:
             print("replay done (last frame stays on GET /)", flush=True)

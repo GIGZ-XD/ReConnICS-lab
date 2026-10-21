@@ -62,6 +62,7 @@ Open `http://localhost:8123/?reconnics=http://127.0.0.1:8088` and click the L33E
 - t=40-47: the plant's firmware is 24.011 (Lab column `20.011 -> 24.011`), the console still says 20.011: red `mismatch`.
 - ~5 s after the second sweep (t=70) the `*-after.pcap` files are uploaded; the console reports 24.011 (match), logs
   `firmware 20.011 -> 24.011`, and the viewer shows it in the event strip.
+- Too fast? The viewer header has Pause/Play (Space) and 0.5x / 1x / 2x for the replay; the uploads follow replay time, so they wait while paused and slow down with the speed.
 - The replay loops. A second loop re-sends the same pcaps (`409 already there`) and the console already says 24.011 from t=0, so the
   next loop shows a reversed mismatch before the firmware flash; restart the console with an empty `--data` dir (and the feed) to see the story from the start.
 

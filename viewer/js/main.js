@@ -5,6 +5,7 @@ import { startFeed } from './feed.js';
 import { statusOf, processOf } from './schema.js';
 import { Inventory } from './inventory.js';
 import { startLive } from './live.js';
+import { fmtClock } from './clock.js';
 import { renderList, renderPanel, renderLive, renderEvents } from './ui.js';
 
 const q = new URLSearchParams(location.search), $ = id => document.getElementById(id);
@@ -137,6 +138,28 @@ if (rcUrl) {
   });
 }
 
+// ---------------------------------------------------------------- replay controls (pause / speed), only for replayable sources
+let rctl = { can: false }, badgeNow = { kind: 'wait', text: 'connecting...', title: '' };
+function showBadge() {                                       // "Paused" replaces the source name while the replay is stopped
+  const b = $('badge'), p = rctl.can && rctl.paused, kind = p ? 'paused' : badgeNow.kind, text = p ? 'Paused' : badgeNow.text;
+  if (b.className !== 'badge ' + kind) b.className = 'badge ' + kind;
+  if (b.textContent !== text) b.textContent = text;
+  b.title = badgeNow.title || '';
+}
+function onControl(s) {
+  const was = rctl.can && rctl.paused; rctl = s;
+  $('replayCtl').hidden = !s.can;
+  if (s.can) {
+    const label = s.paused ? 'Play' : 'Pause', pos = s.len ? `${fmtClock(s.pos ?? 0)} / ${fmtClock(s.len)}` : '';
+    if ($('playBtn').textContent !== label) { $('playBtn').textContent = label; $('playBtn').title = label + ' (Space)'; }
+    if ($('speedSel').value !== String(s.speed)) $('speedSel').value = String(s.speed);
+    if ($('replayPos').textContent !== pos) $('replayPos').textContent = pos;
+  }
+  if (was !== (s.can && !!s.paused)) showBadge();
+}
+$('playBtn').onclick = () => feed.control(rctl.paused ? 'play' : 'pause');
+$('speedSel').onchange = e => feed.control('speed', +e.target.value);
+
 // ---------------------------------------------------------------- toolbar / keys
 const go = v => viewer.view(v);
 $('presets').addEventListener('click', e => { const v = e.target.dataset.view; if (v) go(v); });
@@ -144,6 +167,7 @@ const toggleLabels = () => { viewer.setLabels(!viewer.labels); $('labelsBtn').se
 $('labelsBtn').onclick = toggleLabels;
 addEventListener('keydown', e => {
   if (e.target.matches('input, select, textarea') || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === ' ' && rctl.can && !e.target.closest('button, summary, a')) { feed.control(rctl.paused ? 'play' : 'pause'); e.preventDefault(); return; }   // on a focused button Space already clicks it
   const v = ['overview', 'cell1', 'cell2', 'control', 'hero'][+e.key - 1];
   if (v) go(v); else if (e.key === 'l' || e.key === 'L') toggleLabels(); else if (e.key === 'Escape') select(null);
 });
@@ -151,7 +175,7 @@ addEventListener('keydown', e => {
 // ---------------------------------------------------------------- start
 const mode = q.get('mode') || (q.get('replay') ? 'replay' : 'auto');
 const feed = startFeed({ mode, wsUrl: q.get('ws') || 'ws://localhost:8765/state', replayUrl: q.get('replay') },
-  { onMessage, onStatus: ({ kind, text, title }) => { const b = $('badge'); b.className = 'badge ' + kind; b.textContent = text; b.title = title || ''; $('restartBtn').hidden = kind !== 'demo'; }, onReset: () => reset() });
+  { onMessage, onStatus: ({ kind, text, title }) => { badgeNow = { kind, text, title }; showBadge(); $('restartBtn').hidden = kind !== 'demo'; }, onReset: () => reset(), onControl });
 $('restartBtn').onclick = () => feed.restartDemo();
 if (q.get('view')) go(q.get('view'));
 if (q.get('select')) { const t = q.get('select'); const f = () => { if (S.devs.has(t)) select(t, !q.get('view')); else setTimeout(f, 300); }; f(); }

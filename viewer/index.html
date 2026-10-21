@@ -15,6 +15,11 @@
 <header id="top">
   <h1>ReConnICS <span>3D plant</span></h1>
   <span id="badge" class="badge wait" role="status">connecting...</span>
+  <span id="replayCtl" class="rctl" hidden>
+    <button id="playBtn" aria-keyshortcuts="Space" title="Pause (Space)">Pause</button>
+    <select id="speedSel" aria-label="Replay speed"><option value="0.5">0.5x</option><option value="1" selected>1x</option><option value="2">2x</option></select>
+    <span id="replayPos" class="dim"></span>
+  </span>
   <span id="rcChip" class="chip" role="status" hidden></span>
   <nav id="presets" aria-label="Camera presets">
     <button data-view="overview" title="Key 1">Overview</button>

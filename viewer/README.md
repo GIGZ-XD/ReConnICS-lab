@@ -36,6 +36,8 @@ Header chip: `ReConnICS-ng - 127.0.0.1:8088 - N analysed`, or `not reachable` (c
 | file replay | `?replay=sample/demo-run.jsonl.gz` plays a recording client-side (JSON array, NDJSON or `.gz`, honours `t`, loops) | REPLAY |
 | demo | `?mode=demo`; built-in simulator, same schema | DEMO DATA |
 
+Replays (plant feed.py, `?replay=`) and the built-in demo have Pause/Play (Space) and 0.5x / 1x / 2x in the header next to the badge; the badge reads PAUSED. With feed.py the clock is shared by every viewer and the timed ReConnICS-ng uploads pause with it.
+
 Live plant: `.\plant\demo.ps1` (WSL2) or `sh plant/run.sh --feed`. `sample/demo-run.jsonl.gz` is a copy of the committed
 `plant/demo-run.jsonl.gz` (lab commit 4137997/c213a25).
 

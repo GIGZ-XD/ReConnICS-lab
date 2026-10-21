@@ -16,6 +16,9 @@ button[aria-pressed="true"] { border-color: var(--accent); background: #17323b; 
 .badge.demo { background: #5c3a00; color: #ffd27a; border: 1px solid var(--hero); }
 .badge.live { background: #0d3b22; color: #7dffb0; border: 1px solid var(--ok); }
 .badge.replay { background: #2b2250; color: #c9b8ff; border: 1px solid #8e7dd6; }
+.badge.paused { background: #3a2f08; color: #ffd27a; border: 1px solid var(--warn); }
+.rctl { display: inline-flex; align-items: center; gap: 6px; } .rctl[hidden] { display: none; }
+#playBtn { min-width: 60px; } #replayPos { min-width: 72px; font-variant-numeric: tabular-nums; }
 .badge.wait { background: #2a2f36; color: var(--dim); border: 1px solid var(--line); }
 .heroBtn { border-color: #6b4a10; color: var(--hero); }
 #legend { display: flex; gap: 12px; list-style: none; margin: 0; padding: 0; color: var(--dim); font-size: 12px; }

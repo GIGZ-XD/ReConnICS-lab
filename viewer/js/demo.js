@@ -1,6 +1,7 @@
 // Built-in simulator. Emits frames in the plant's STATE_FEED.md schema (plant/STATE_FEED.md) and follows plant/scenario.json:
 // boot (gratuitous ARP) -> HMI/historian polling -> EWS identity sweep @15 s -> L33ER firmware flash @40 s (20.011 -> 24.011,
-// down ~7 s) -> EWS identity sweep @65 s -> loop at 90 s. Roster mirrors plant/devices/*.json.
+// down ~7 s) -> EWS identity sweep @65 s -> loop at 90 s. Roster mirrors plant/devices/*.json. Time comes from a ReplayClock (pause / speed).
+import { ReplayClock } from './clock.js';
 const SEGMENTS = [
   { id: 'cell1', subnet: '10.10.1.0/24', name: 'Line 1 packaging cell (control network)' },
   { id: 'cell2', subnet: '10.10.2.0/24', name: 'Line 2 utilities cell (control network)' },
@@ -24,6 +25,7 @@ const ROSTER = [
 ];
 const MB = ['plc-m221', 'plc-m340', 'plc-m580'];
 const T_BOOT = 4.1, T_SWEEP1 = 15, T_FLASH = 40, FLASH_S = 7, T_SWEEP2 = 65, LOOP = 90, NEW_FW = '24.011';
+export const DEMO_LEN = LOOP;
 
 function schedule() {                                   // [{at, src, dst, proto, fc, bytes}] sorted by time
   const ev = [], pair = (at, src, dst, proto, fc, bytes, fcBack = fc) => {
@@ -46,14 +48,14 @@ function schedule() {                                   // [{at, src, dst, proto
   return ev.sort((a, b) => a.at - b.at);
 }
 
-export function createDemo(emit, onRestart) {
-  let t0, last, events, timer, level, valve, parts, log, logged;
-  const restart = () => { t0 = performance.now() / 1000; last = -1; events = schedule(); level = 20; valve = true; parts = 0; logged = new Set(); log = [{ t: T_BOOT, kind: 'boot', device: null, msg: 'plant up; devices announce themselves (gratuitous ARP)' }]; onRestart?.(); };
+export function createDemo(emit, onRestart, clock = new ReplayClock()) {
+  let last, events, timer, level, valve, parts, log, logged;
+  const restart = () => { clock.reset(); last = -1; events = schedule(); level = 20; valve = true; parts = 0; logged = new Set(); log = [{ t: T_BOOT, kind: 'boot', device: null, msg: 'plant up; devices announce themselves (gratuitous ARP)' }]; onRestart?.(); };
   const addEvent = (t, kind, device, msg) => { log.push({ t, kind, device, msg }); if (log.length > 60) log.shift(); };
   const once = (k, at, kind, device, msg) => { if (!logged.has(k)) { logged.add(k); addEvent(at, kind, device, msg); } };
 
   function tick() {
-    const t = performance.now() / 1000 - t0;
+    const t = clock.get();
     if (t >= LOOP) { restart(); return; }
     const dt = Math.min(.5, t - Math.max(last, 0));
     const lDown = t >= T_FLASH && t < T_FLASH + FLASH_S, booted = id => t >= ROSTER.find(r => r[0] === id)[11] + 1;
