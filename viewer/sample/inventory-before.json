@@ -1,0 +1,1523 @@
+{
+ "schema": 1,
+ "tool": "ReConICS inventory",
+ "source": {
+  "tool": "reconnics-ng",
+  "version": "0.1.0",
+  "pcap": "sup-before.pcap",
+  "pcapSha256": "72b6dfc635fab3e694a447ea14f00c1169a3f9affe9ca5d60cb7831e60cce67a",
+  "sample": "real: captures/plant/sup-before.pcap from the plant demo run (lab commit c213a25), reconnics-ng 0.1.0, advisory index signature NOT verified (local sample)"
+ },
+ "summary": {
+  "assets": 10,
+  "meanFilled": 4.5,
+  "of": 14,
+  "passiveMax": 9,
+  "ouiLookup": "not run",
+  "matcher": "run, index UNVERIFIED",
+  "index": {
+   "generated": "2026-10-12T16:48:22.980833100Z",
+   "kevCatalogVersion": "2026.10.08"
+  },
+  "kevAtModelAssets": 0,
+  "fillRate": {
+   "ip": "1.000",
+   "mac": "0.400",
+   "protocols": "0.900",
+   "ports": "0.000",
+   "role": "0.300",
+   "vendor": "0.600",
+   "model": "0.600",
+   "os": "0.600",
+   "hostname": "0.100",
+   "criticality": "0.000",
+   "asset_number": "0.000",
+   "location": "0.000",
+   "logging": "0.000",
+   "user_accounts": "0.000"
+  },
+  "matchLevels": {
+   "EXACT": 3,
+   "PROBABLE": 2,
+   "POSSIBLE": 0,
+   "NONE": 5
+  },
+  "matchCeilings": {
+   "EXACT": 6,
+   "PROBABLE": 0,
+   "POSSIBLE": 0,
+   "NONE": 4
+  },
+  "rejected": 0
+ },
+ "assets": [
+  {
+   "id": "10.10.1.10",
+   "firmware": {
+    "value": "V1.5.0.1",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x02, frame 329, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "ip": {
+    "value": "10.10.1.10",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-904"
+   },
+   "model": {
+    "value": "TM221CE16R",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x01, frame 326, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "protocols": {
+    "value": [
+     "modbus"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 9-904"
+   },
+   "vendor": {
+    "value": "Schneider Electric",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x00, frame 326, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "completeness": {
+    "filled": 5,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "PROBABLE",
+    "kevAtModel": false,
+    "maxCvss": 10,
+    "advisories": [
+     {
+      "advisory": "ICSA-17-103-02A",
+      "title": "Schneider Electric Modicon M221 PLCs and SoMachine Basic (Update A)",
+      "level": "PROBABLE",
+      "affected": "<= 1.5.0.1",
+      "cves": [
+       "CVE-2017-7574",
+       "CVE-2017-7575"
+      ],
+      "kev": [],
+      "cvss": 10
+     },
+     {
+      "advisory": "ICSA-18-324-02",
+      "title": "Schneider Electric Modicon M221",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2018-7798"
+      ],
+      "kev": [],
+      "cvss": 8.2
+     },
+     {
+      "advisory": "ICSA-18-240-01",
+      "title": "Schneider Electric Modicon M221",
+      "level": "PROBABLE",
+      "affected": "< 1.6.2.0",
+      "cves": [
+       "CVE-2018-7790",
+       "CVE-2018-7791",
+       "CVE-2018-7792"
+      ],
+      "kev": [],
+      "cvss": 7.7
+     },
+     {
+      "advisory": "ICSA-20-343-04",
+      "title": "Schneider Electric Modicon M221 Programmable Logic Controller",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2020-28214",
+       "CVE-2020-7565",
+       "CVE-2020-7566",
+       "CVE-2020-7567",
+       "CVE-2020-7568"
+      ],
+      "kev": [],
+      "cvss": 7.1
+     },
+     {
+      "advisory": "ICSA-18-240-02",
+      "title": "Schneider Electric Modicon M221",
+      "level": "PROBABLE",
+      "affected": "<1.6.2.0",
+      "cves": [
+       "CVE-2018-7789"
+      ],
+      "kev": [],
+      "cvss": 4.8
+     }
+    ]
+   }
+  },
+  {
+   "id": "10.10.1.11",
+   "firmware": {
+    "value": "V2.10",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x02, frame 341, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "ip": {
+    "value": "10.10.1.11",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 28-909"
+   },
+   "model": {
+    "value": "BMXP342020",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x01, frame 338, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "protocols": {
+    "value": [
+     "modbus"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 28-909"
+   },
+   "vendor": {
+    "value": "Schneider Electric",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x00, frame 338, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "completeness": {
+    "filled": 5,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "EXACT",
+    "kevAtModel": false,
+    "maxCvss": 9.8,
+    "advisories": [
+     {
+      "advisory": "ICSA-21-194-02",
+      "title": "Schneider Electric Modicon Controllers and Software (Update A)",
+      "level": "EXACT",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2020-12525",
+       "CVE-2021-22778",
+       "CVE-2021-22779",
+       "CVE-2021-22780",
+       "CVE-2021-22781",
+       "CVE-2021-22782"
+      ],
+      "kev": [],
+      "cvss": 9.8
+     },
+     {
+      "advisory": "ICSA-24-331-03",
+      "title": "Schneider Electric EcoStruxure Control Expert, EcoStruxure Process Expert, and Modicon M340, M580 and M580 Safety PLCs",
+      "level": "EXACT",
+      "affected": "vers:generic/<SV3.60",
+      "cves": [
+       "CVE-2023-6408"
+      ],
+      "kev": [],
+      "cvss": 8.1
+     },
+     {
+      "advisory": "ICSA-23-201-01",
+      "title": "Schneider Electric EcoStruxure Products, Modicon PLCs, and Programmable Automation Controllers",
+      "level": "EXACT",
+      "affected": "< SV3.51",
+      "cves": [
+       "CVE-2022-45788"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-13-077-01B",
+      "title": "Schneider Electric PLCs Vulnerabilities",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2013-0663",
+       "CVE-2013-0664"
+      ],
+      "kev": [],
+      "cvss": 10
+     },
+     {
+      "advisory": "ICSA-14-273-01",
+      "title": "SchneiderWEB Server Directory Traversal Vulnerability",
+      "level": "PROBABLE",
+      "affected": "BMXP342020",
+      "cves": [
+       "CVE-2014-0754"
+      ],
+      "kev": [],
+      "cvss": 10
+     },
+     {
+      "advisory": "ICSA-25-114-01",
+      "title": "Schneider Electric Modicon Controllers (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:intdot/<3.10",
+      "cves": [
+       "CVE-2018-7842",
+       "CVE-2018-7843",
+       "CVE-2018-7846",
+       "CVE-2018-7847",
+       "CVE-2018-7848",
+       "CVE-2018-7849",
+       "CVE-2018-7850",
+       "CVE-2018-7854",
+       "CVE-2018-7856",
+       "CVE-2019-6807",
+       "CVE-2019-6808",
+       "CVE-2019-6809",
+       "CVE-2019-6828",
+       "CVE-2019-6829"
+      ],
+      "kev": [],
+      "cvss": 10
+     },
+     {
+      "advisory": "ICSA-23-227-01",
+      "title": "Schneider Electric EcoStruxure Control Expert, Process Expert, Modicon M340, M580 and M580 CPU (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.70",
+      "cves": [
+       "CVE-2022-45789"
+      ],
+      "kev": [],
+      "cvss": 8.1
+     },
+     {
+      "advisory": "ICSA-24-326-04",
+      "title": "Schneider Electric Modicon M340, MC80, and Momentum Unity M1E (Update B)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.65",
+      "cves": [
+       "CVE-2024-8936",
+       "CVE-2024-8937",
+       "CVE-2024-8938"
+      ],
+      "kev": [],
+      "cvss": 8.1
+     },
+     {
+      "advisory": "ICSA-15-351-01",
+      "title": "Schneider Electric Modicon M340 Buffer Overflow Vulnerability",
+      "level": "PROBABLE",
+      "affected": "BMXP342020",
+      "cves": [
+       "CVE-2015-7937"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-19-183-01",
+      "title": "Schneider Electric Modicon Controllers",
+      "level": "PROBABLE",
+      "affected": "< 3.01",
+      "cves": [
+       "CVE-2019-6819"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-20-016-01",
+      "title": "Schneider Electric Modicon Controllers (Update A)",
+      "level": "PROBABLE",
+      "affected": "< 3.01",
+      "cves": [
+       "CVE-2018-7794",
+       "CVE-2019-6856",
+       "CVE-2019-6857"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-24-326-03",
+      "title": "Schneider Electric Modicon M340, MC80, and Momentum Unity M1E & EcoStruxure (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.70",
+      "cves": [
+       "CVE-2024-8933"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-25-238-03",
+      "title": "Schneider Electric Modicon M340 Controller and Communication Modules (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.70",
+      "cves": [
+       "CVE-2025-6625"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-26-260-04",
+      "title": "Schneider Electric Modicon M340 Controller and Communication Modules",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.70",
+      "cves": [
+       "CVE-2025-6625"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-25-254-09",
+      "title": "Schneider Electric Modicon M340, BMXNOE0100, and BMXNOE0110 (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV3.70",
+      "cves": [
+       "CVE-2024-5056"
+      ],
+      "kev": [],
+      "cvss": 6.5
+     },
+     {
+      "advisory": "ICSA-18-086-01",
+      "title": "Schneider Electric Modicon Premium, Modicon Quantum, Modicon M340, and Modicon BMXNOR0200",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2018-7240",
+       "CVE-2018-7241",
+       "CVE-2018-7242"
+      ],
+      "kev": [],
+      "cvss": 5.9
+     },
+     {
+      "advisory": "ICSA-19-136-01",
+      "title": "Schneider Electric Modicon Controllers",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2019-6821"
+      ],
+      "kev": [],
+      "cvss": 5.4
+     },
+     {
+      "advisory": "ICSA-15-246-02",
+      "title": "Schneider Electric Modicon PLC Vulnerabilities",
+      "level": "PROBABLE",
+      "affected": "BMXP342020",
+      "cves": [
+       "CVE-2015-6461",
+       "CVE-2015-6462"
+      ],
+      "kev": [],
+      "cvss": 3.2
+     }
+    ]
+   }
+  },
+  {
+   "id": "10.10.1.12",
+   "deviceType": {
+    "value": "s7:CPU 315-2 PN/DP",
+    "confidence": "HIGH",
+    "evidence": "s7comm SZL 0x001C Component Identification index=0x0007, frame 401, txn pduRef=512, module type name, entry=5"
+   },
+   "firmware": {
+    "value": "V3.2.6",
+    "confidence": "HIGH",
+    "evidence": "s7comm SZL 0x0011 Module Identification index=0x0007 entry=2, frame 399, txn pduRef=256, Ausbg/Ausbe basic firmware"
+   },
+   "hostname": {
+    "value": "CPU 315-2 PN/DP",
+    "confidence": "HIGH",
+    "evidence": "s7comm SZL 0x001C Component Identification index=0x0002, frame 401, txn pduRef=512, module name, entry=1"
+   },
+   "ip": {
+    "value": "10.10.1.12",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 83-922"
+   },
+   "model": {
+    "value": "6ES7 315-2EH14-0AB0",
+    "confidence": "HIGH",
+    "evidence": "s7comm SZL 0x0011 Module Identification index=0x0001 entry=0, frame 399, txn pduRef=256, MlfB (order number)"
+   },
+   "protocols": {
+    "value": [
+     "s7comm"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 83-922"
+   },
+   "role": {
+    "value": "PLC",
+    "confidence": "HIGH",
+    "evidence": "from device type s7:CPU 315-2 PN/DP (s7comm SZL 0x001C Component Identification index=0x0007, frame 401, txn pduRef=512, module type name, entry=5)"
+   },
+   "serial": {
+    "value": "S C-C2UR28922012",
+    "confidence": "HIGH",
+    "evidence": "s7comm SZL 0x001C Component Identification index=0x0005, frame 401, txn pduRef=512, serial number, entry=4"
+   },
+   "vendor": {
+    "value": "Siemens",
+    "confidence": "MEDIUM",
+    "evidence": "s7comm SZL 0x0011 Module Identification vendor from S7 context, frame 399, txn pduRef=256"
+   },
+   "completeness": {
+    "filled": 7,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "EXACT",
+    "kevAtModel": false,
+    "matchedAs": "SIMATIC S7-300",
+    "maxCvss": 7.8,
+    "advisories": [
+     {
+      "advisory": "ICSA-15-064-04",
+      "title": "Siemens SIMATIC S7-300 CPU Denial-of-Service Vulnerability",
+      "level": "EXACT",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2015-2177"
+      ],
+      "kev": [],
+      "cvss": 7.8
+     },
+     {
+      "advisory": "ICSA-20-252-02",
+      "title": "Siemens SIMATIC S7-300 and S7-400 CPUs (Update C)",
+      "level": "EXACT",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2020-15791"
+      ],
+      "kev": [],
+      "cvss": 5.9
+     },
+     {
+      "advisory": "ICSA-20-315-04",
+      "title": "Siemens SIMATIC S7-300 CPUs and SINUMERIK Controller (Update A)",
+      "level": "EXACT",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2020-15783"
+      ],
+      "kev": [],
+      "cvss": 5.9
+     },
+     {
+      "advisory": "ICSA-19-099-06",
+      "title": "Siemens SIMATIC, SIMOCODE, SINAMICS, SITOP, and TIM (Update I)",
+      "level": "PROBABLE",
+      "affected": "<V3.3.16",
+      "cves": [
+       "CVE-2019-6568"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-19-283-01",
+      "title": "Siemens Industrial Real-Time (IRT) Devices",
+      "level": "PROBABLE",
+      "affected": "<V3.2.17",
+      "cves": [
+       "CVE-2019-10923"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-19-283-02",
+      "title": "Siemens PROFINET Devices (Update K)",
+      "level": "PROBABLE",
+      "affected": "<V3.2.17",
+      "cves": [
+       "CVE-2019-10936"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-20-105-08",
+      "title": "Siemens KTK, SIDOOR, SIMATIC, and SINAMICS (Update D)",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2019-19300"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-25-352-05",
+      "title": "Siemens Interniche IP-Stack",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2025-40820"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-26-134-06",
+      "title": "Siemens Industrial Devices",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2025-40833"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-18-079-02",
+      "title": "Siemens SIMATIC, SINUMERIK, and PROFINET IO (Update D)",
+      "level": "PROBABLE",
+      "affected": "vers:all/<V3.3.16",
+      "cves": [
+       "CVE-2018-4843"
+      ],
+      "kev": [],
+      "cvss": 6.5
+     },
+     {
+      "advisory": "ICSA-22-314-02",
+      "title": "Siemens Web Server Login Page of Industrial Controllers",
+      "level": "PROBABLE",
+      "affected": "<V3.3.19",
+      "cves": [
+       "CVE-2022-30694"
+      ],
+      "kev": [],
+      "cvss": 6.5
+     },
+     {
+      "advisory": "ICSA-23-222-09",
+      "title": "Siemens SIMATIC",
+      "level": "PROBABLE",
+      "affected": "<V3.3.19",
+      "cves": [
+       "CVE-2022-4304"
+      ],
+      "kev": [],
+      "cvss": 5.9
+     },
+     {
+      "advisory": "ICSA-22-104-06",
+      "title": "Siemens PROFINET Stack Integrated on Interniche Stack",
+      "level": "PROBABLE",
+      "affected": "vers:all/<V3.3.19",
+      "cves": [
+       "CVE-2022-25622"
+      ],
+      "kev": [],
+      "cvss": 5.3
+     },
+     {
+      "advisory": "ICSA-25-105-03",
+      "title": "Siemens SIMOCODE, SIMATIC, SIPLUS, SIDOOR, SIWAREX",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2024-23814"
+      ],
+      "kev": [],
+      "cvss": 5.3
+     }
+    ]
+   }
+  },
+  {
+   "id": "10.10.2.10",
+   "deviceType": {
+    "value": "cip:0x0E",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity deviceType=14, frame 358, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+   },
+   "firmware": {
+    "value": "20.011",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip CIP Get_Attributes_All Identity revision, frame 369, txn session=1932520136 request frame 368, productCode=104"
+   },
+   "ip": {
+    "value": "10.10.2.10",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 67-916"
+   },
+   "model": {
+    "value": "1769-L33ER/A LOGIX5333ER",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity productName, frame 358, txn session=0, deviceType=14 productCode=104"
+   },
+   "protocols": {
+    "value": [
+     "ethernet-ip"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 67-916"
+   },
+   "role": {
+    "value": "PLC",
+    "confidence": "HIGH",
+    "evidence": "from device type cip:0x0E (ethernet-ip ListIdentity deviceType=14, frame 358, txn session=0, CIP Identity attribute 2 (ODVA device profile))"
+   },
+   "serial": {
+    "value": "60E1F4A2",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity serialNumber, frame 358, txn session=0, 0x60e1f4a2"
+   },
+   "vendor": {
+    "value": "Rockwell Automation",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity vendorId=1, frame 358, txn session=0, mapped from ODVA CIP Vendor ID table"
+   },
+   "completeness": {
+    "filled": 6,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "EXACT",
+    "kevAtModel": false,
+    "maxCvss": 6.1,
+    "advisories": [
+     {
+      "advisory": "ICSA-16-061-02",
+      "title": "Rockwell Automation Allen-Bradley CompactLogix Reflective Cross-Site Scripting Vulnerability (Update A)",
+      "level": "EXACT",
+      "affected": "<=27.011",
+      "cves": [
+       "CVE-2016-2279"
+      ],
+      "kev": [],
+      "cvss": 6.1
+     },
+     {
+      "advisory": "ICSA-13-011-03",
+      "title": "Rockwell Automation ControlLogix PLC Vulnerabilities",
+      "level": "PROBABLE",
+      "affected": "vers:all/*",
+      "cves": [
+       "CVE-2012-6435",
+       "CVE-2012-6436",
+       "CVE-2012-6437",
+       "CVE-2012-6438",
+       "CVE-2012-6439",
+       "CVE-2012-6440",
+       "CVE-2012-6441",
+       "CVE-2012-6442"
+      ],
+      "kev": [],
+      "cvss": 10
+     }
+    ]
+   }
+  },
+  {
+   "id": "10.10.2.11",
+   "deviceType": {
+    "value": "cip:0x02",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity deviceType=2, frame 374, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+   },
+   "firmware": {
+    "value": "5.001",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip CIP Get_Attributes_All Identity revision, frame 385, txn session=1886420334 request frame 384, productCode=144"
+   },
+   "ip": {
+    "value": "10.10.2.11",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 76-919"
+   },
+   "model": {
+    "value": "PowerFlex 525 1P 240V 2.2kW",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity productName, frame 374, txn session=0, deviceType=2 productCode=144"
+   },
+   "protocols": {
+    "value": [
+     "ethernet-ip"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 76-919"
+   },
+   "role": {
+    "value": "drive",
+    "confidence": "MEDIUM",
+    "evidence": "from device type cip:0x02 (ethernet-ip ListIdentity deviceType=2, frame 374, txn session=0, CIP Identity attribute 2 (ODVA device profile))"
+   },
+   "serial": {
+    "value": "C07A2214",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity serialNumber, frame 374, txn session=0, 0xc07a2214"
+   },
+   "vendor": {
+    "value": "Rockwell Automation",
+    "confidence": "HIGH",
+    "evidence": "ethernet-ip ListIdentity vendorId=1, frame 374, txn session=0, mapped from ODVA CIP Vendor ID table"
+   },
+   "completeness": {
+    "filled": 6,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "NONE",
+    "kevAtModel": false,
+    "maxCvss": 0,
+    "advisories": []
+   }
+  },
+  {
+   "id": "10.10.2.12",
+   "firmware": {
+    "value": "V2.70",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x02, frame 353, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "ip": {
+    "value": "10.10.2.12",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 47-914"
+   },
+   "model": {
+    "value": "BMEP582040",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x01, frame 350, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "protocols": {
+    "value": [
+     "modbus"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED+MESSAGE_DECODED, frames 47-914"
+   },
+   "vendor": {
+    "value": "Schneider Electric",
+    "confidence": "HIGH",
+    "evidence": "modbus FC43/14 Read Device Identification objectId=0x00, frame 350, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+   },
+   "completeness": {
+    "filled": 5,
+    "of": 14,
+    "matchCeiling": "EXACT",
+    "missing": [
+     {
+      "attr": "mac",
+      "fillBy": "passive",
+      "hint": "Only visible on the device's own segment; capture at its access-switch SPAN port.",
+      "effect": "No MAC-vendor (OUI) fallback."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "PROBABLE",
+    "kevAtModel": false,
+    "maxCvss": 10,
+    "advisories": [
+     {
+      "advisory": "ICSA-25-114-01",
+      "title": "Schneider Electric Modicon Controllers (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:intdot/<2.90",
+      "cves": [
+       "CVE-2018-7842",
+       "CVE-2018-7846",
+       "CVE-2018-7847",
+       "CVE-2018-7848",
+       "CVE-2018-7849",
+       "CVE-2018-7850",
+       "CVE-2018-7853",
+       "CVE-2018-7854",
+       "CVE-2019-6807",
+       "CVE-2019-6808",
+       "CVE-2019-6809",
+       "CVE-2019-6828",
+       "CVE-2019-6829"
+      ],
+      "kev": [],
+      "cvss": 10
+     },
+     {
+      "advisory": "ICSA-23-227-01",
+      "title": "Schneider Electric EcoStruxure Control Expert, Process Expert, Modicon M340, M580 and M580 CPU (Update A)",
+      "level": "PROBABLE",
+      "affected": "vers:generic/<SV4.20",
+      "cves": [
+       "CVE-2022-45789"
+      ],
+      "kev": [],
+      "cvss": 8.1
+     },
+     {
+      "advisory": "ICSA-19-183-01",
+      "title": "Schneider Electric Modicon Controllers",
+      "level": "PROBABLE",
+      "affected": "< 2.80",
+      "cves": [
+       "CVE-2019-6819"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     },
+     {
+      "advisory": "ICSA-20-016-01",
+      "title": "Schneider Electric Modicon Controllers (Update A)",
+      "level": "PROBABLE",
+      "affected": "< 2.80",
+      "cves": [
+       "CVE-2018-7794",
+       "CVE-2019-6856",
+       "CVE-2019-6857"
+      ],
+      "kev": [],
+      "cvss": 7.5
+     }
+    ]
+   }
+  },
+  {
+   "id": "10.10.3.1",
+   "ip": {
+    "value": "10.10.3.1",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 5-320"
+   },
+   "mac": {
+    "value": "00:1a:a1:00:02:01",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 5-320"
+   },
+   "completeness": {
+    "filled": 2,
+    "of": 14,
+    "matchCeiling": "NONE",
+    "nextStep": "vendor: capture an identity reply (Modbus FC43/14, ENIP ListIdentity, S7 SZL); an OUI vendor is not enough to match",
+    "missing": [
+     {
+      "attr": "protocols",
+      "fillBy": "passive",
+      "hint": "Capture longer, across more operating states (start-up, changeover, maintenance)."
+     },
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "vendor",
+      "fillBy": "passive",
+      "hint": "Look for Modbus FC43/14, ENIP ListIdentity or S7 SZL replies. A MAC OUI only names the NIC maker.",
+      "effect": "No advisory match is possible; an OUI vendor alone gives none."
+     },
+     {
+      "attr": "model",
+      "fillBy": "passive",
+      "hint": "Identity replies appear when an HMI/EWS connects or at start-up; capture then.",
+      "effect": "Advisory match capped at POSSIBLE (vendor only)."
+     },
+     {
+      "attr": "os",
+      "fillBy": "passive",
+      "hint": "PLC: firmware from identity replies (FC43 revision, ListIdentity revision, SZL 0x0011). EWS/HMI: OS from SMB/NetBIOS or the asset register.",
+      "effect": "Without firmware the advisory match is capped at PROBABLE."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "NONE",
+    "kevAtModel": false,
+    "maxCvss": 0,
+    "advisories": []
+   }
+  },
+  {
+   "id": "10.10.3.20",
+   "ip": {
+    "value": "10.10.3.20",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 3-922"
+   },
+   "mac": {
+    "value": "00:14:22:00:02:14",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 3-922"
+   },
+   "protocols": {
+    "value": [
+     "ethernet-ip",
+     "modbus",
+     "s7comm"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 3-922"
+   },
+   "completeness": {
+    "filled": 3,
+    "of": 14,
+    "matchCeiling": "NONE",
+    "nextStep": "vendor: capture an identity reply (Modbus FC43/14, ENIP ListIdentity, S7 SZL); an OUI vendor is not enough to match",
+    "missing": [
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "vendor",
+      "fillBy": "passive",
+      "hint": "Look for Modbus FC43/14, ENIP ListIdentity or S7 SZL replies. A MAC OUI only names the NIC maker.",
+      "effect": "No advisory match is possible; an OUI vendor alone gives none."
+     },
+     {
+      "attr": "model",
+      "fillBy": "passive",
+      "hint": "Identity replies appear when an HMI/EWS connects or at start-up; capture then.",
+      "effect": "Advisory match capped at POSSIBLE (vendor only)."
+     },
+     {
+      "attr": "os",
+      "fillBy": "passive",
+      "hint": "PLC: firmware from identity replies (FC43 revision, ListIdentity revision, SZL 0x0011). EWS/HMI: OS from SMB/NetBIOS or the asset register.",
+      "effect": "Without firmware the advisory match is capped at PROBABLE."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "NONE",
+    "kevAtModel": false,
+    "maxCvss": 0,
+    "advisories": []
+   }
+  },
+  {
+   "id": "10.10.3.21",
+   "ip": {
+    "value": "10.10.3.21",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 2-401"
+   },
+   "mac": {
+    "value": "00:14:22:00:02:15",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 2-401"
+   },
+   "protocols": {
+    "value": [
+     "ethernet-ip",
+     "modbus",
+     "s7comm"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 2-401"
+   },
+   "completeness": {
+    "filled": 3,
+    "of": 14,
+    "matchCeiling": "NONE",
+    "nextStep": "vendor: capture an identity reply (Modbus FC43/14, ENIP ListIdentity, S7 SZL); an OUI vendor is not enough to match",
+    "missing": [
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "vendor",
+      "fillBy": "passive",
+      "hint": "Look for Modbus FC43/14, ENIP ListIdentity or S7 SZL replies. A MAC OUI only names the NIC maker.",
+      "effect": "No advisory match is possible; an OUI vendor alone gives none."
+     },
+     {
+      "attr": "model",
+      "fillBy": "passive",
+      "hint": "Identity replies appear when an HMI/EWS connects or at start-up; capture then.",
+      "effect": "Advisory match capped at POSSIBLE (vendor only)."
+     },
+     {
+      "attr": "os",
+      "fillBy": "passive",
+      "hint": "PLC: firmware from identity replies (FC43 revision, ListIdentity revision, SZL 0x0011). EWS/HMI: OS from SMB/NetBIOS or the asset register.",
+      "effect": "Without firmware the advisory match is capped at PROBABLE."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "NONE",
+    "kevAtModel": false,
+    "maxCvss": 0,
+    "advisories": []
+   }
+  },
+  {
+   "id": "10.10.3.22",
+   "ip": {
+    "value": "10.10.3.22",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 1-826"
+   },
+   "mac": {
+    "value": "00:0c:29:00:02:16",
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 1-826"
+   },
+   "protocols": {
+    "value": [
+     "modbus"
+    ],
+    "confidence": "MEDIUM",
+    "evidence": "reconnics-ng HEADER_VALIDATED, frames 1-826"
+   },
+   "completeness": {
+    "filled": 3,
+    "of": 14,
+    "matchCeiling": "NONE",
+    "nextStep": "vendor: capture an identity reply (Modbus FC43/14, ENIP ListIdentity, S7 SZL); an OUI vendor is not enough to match",
+    "missing": [
+     {
+      "attr": "ports",
+      "fillBy": "passive",
+      "hint": "Listening ports show up when a client connects; capture during HMI/EWS sessions."
+     },
+     {
+      "attr": "role",
+      "fillBy": "passive",
+      "hint": "Comes from the identity device type or request/response direction; confirm with the plant engineer."
+     },
+     {
+      "attr": "vendor",
+      "fillBy": "passive",
+      "hint": "Look for Modbus FC43/14, ENIP ListIdentity or S7 SZL replies. A MAC OUI only names the NIC maker.",
+      "effect": "No advisory match is possible; an OUI vendor alone gives none."
+     },
+     {
+      "attr": "model",
+      "fillBy": "passive",
+      "hint": "Identity replies appear when an HMI/EWS connects or at start-up; capture then.",
+      "effect": "Advisory match capped at POSSIBLE (vendor only)."
+     },
+     {
+      "attr": "os",
+      "fillBy": "passive",
+      "hint": "PLC: firmware from identity replies (FC43 revision, ListIdentity revision, SZL 0x0011). EWS/HMI: OS from SMB/NetBIOS or the asset register.",
+      "effect": "Without firmware the advisory match is capped at PROBABLE."
+     },
+     {
+      "attr": "hostname",
+      "fillBy": "passive",
+      "hint": "DNS, NetBIOS, DHCP option 12 or the S7 SZL 0x001C station name; otherwise the plant naming register."
+     },
+     {
+      "attr": "criticality",
+      "fillBy": "human",
+      "hint": "Plant engineer / process hazard analysis."
+     },
+     {
+      "attr": "asset_number",
+      "fillBy": "human",
+      "hint": "Asset register / CMMS."
+     },
+     {
+      "attr": "location",
+      "fillBy": "human",
+      "hint": "Site walkdown."
+     },
+     {
+      "attr": "logging",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     },
+     {
+      "attr": "user_accounts",
+      "fillBy": "human",
+      "hint": "Device configuration review."
+     }
+    ]
+   },
+   "match": {
+    "level": "NONE",
+    "kevAtModel": false,
+    "maxCvss": 0,
+    "advisories": []
+   }
+  }
+ ],
+ "rejected": []
+}
