@@ -47,7 +47,7 @@ Write-Host @"
 Next steps (full script: plant\DEMO.md)
   1. Viewer:  the live feed has ended; keep the viewer fed with  .\plant\demo.ps1 -Replay
               (or point it at ws://localhost:$Port/state)
-  2. ReConnICS-ng site console (ng repo, with --allow-origin from Skoelle18/ReConnICS-ng#14):
+  2. ReConnICS-ng site console (ng repo):
        java -jar target\reconnics-ng.jar serve --index data\index.json --pubkey keys\index-signing.pub --data data\site-demo --allow-origin http://localhost:8123
        re-run with  -ReconnICS http://127.0.0.1:8088  to upload the pcaps automatically, or open http://127.0.0.1:8088/ and
        upload  captures\plant\cell2-before.pcap , then  captures\plant\cell2-after.pcap by hand

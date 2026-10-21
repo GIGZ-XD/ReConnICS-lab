@@ -16,7 +16,7 @@ cd viewer && python -m http.server 8123      # then open http://localhost:8123/
 
 `?reconnics=http://127.0.0.1:8088` polls the console's read-only API every 3 s (`/api/v1/inventory`, `/changes`, `/captures`), so nothing needs a
 file picker. The ReConnICS-ng column starts empty, fills when the first capture has been analysed, and shows the firmware change after the second upload.
-Needs the `--allow-origin` flag from [ReConnICS-ng PR #14](https://github.com/Skoelle18/ReConnICS-ng/pull/14) (the console never answers CORS preflight; the flag opens only those three GETs to the exact origin).
+Needs the `--allow-origin` flag of `serve` (ReConnICS-ng main; the console never answers CORS preflight; the flag opens only those three GETs to the exact origin).
 
 ```powershell
 # 1. ng repo (fresh --data dir per demo)

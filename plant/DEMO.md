@@ -5,8 +5,8 @@ Focus device: **Rockwell 1769-L33ER** `plc-l33er`, 10.10.2.10, MAC 00:00:bc:00:0
 stays inside the affected range).
 
 Prerequisites: WSL2 distro `kali-linux` with root, `tcpdump`, `iproute2`, `python3-venv` (first run builds
-`/root/labvenv`: pymodbus, python-snap7, cpppo); Windows Python 3 and Java 21+. ng repo built from branch
-`fix/p0-ui-data` (or later): `mvn -q package -DskipTests`. No WSL? Skip to "Without WSL".
+`/root/labvenv`: pymodbus, python-snap7, cpppo); Windows Python 3 and Java 21+. ReConnICS-ng main built (`mvn -q package -DskipTests`) with a verified advisory index in
+`data\` — setup is in the [README](../README.md#set-up-reconnics-ng-once-for-a-and-b). No WSL? Skip to "Without WSL".
 
 ## 1. Start the plant (about 100 s)
 
@@ -45,7 +45,7 @@ Done. Written to ...\captures\plant :  cell1|cell2|sup .pcap, <seg>-before.pcap,
 
 ## 2. 3D viewer, fed by the live console
 
-Needs `--allow-origin` from [ReConnICS-ng PR #14](https://github.com/Skoelle18/ReConnICS-ng/pull/14) (or a later ng main).
+Same three terminals as [README, Demo A](../README.md#demo-a-replay-with-the-live-console); the commands are repeated here so this page stands alone.
 
 ```powershell
 # terminal 1, ng repo: a FRESH --data dir for every demo, the viewer's origin allowed (three read-only GETs only)
@@ -64,10 +64,11 @@ Open `http://localhost:8123/?reconnics=http://127.0.0.1:8088` and click the L33E
   `firmware 20.011 -> 24.011`, and the viewer shows it in the event strip.
 - Too fast? The viewer header has Pause/Play (Space) and 0.5x / 1x / 2x for the replay; the uploads follow replay time, so they wait while paused and slow down with the speed.
 - The replay loops. A second loop re-sends the same pcaps (`409 already there`) and the console already says 24.011 from t=0, so the
-  next loop shows a reversed mismatch before the firmware flash; restart the console with an empty `--data` dir (and the feed) to see the story from the start.
+  next loop shows a reversed mismatch before the firmware flash. To see the story from the start again, Ctrl+C the console and the feed, restart both
+  (new `--data` dir) and hard-refresh the viewer.
 
 Without `?reconnics` the panel shows one line on how to connect; "Load inventory file..." and the sample inventories still work.
-The live feed ends when a live run ends; to watch the same storyline without WSL use `-Replay`.
+The live feed ends when a live run ends; to watch the same storyline without WSL use `-Replay`. Live plant with `-ReconnICS` has not been tested end to end.
 
 Expected in the viewer (feed `ws://localhost:8765/state`): 9 devices on 3 segments; tank/conveyor values moving (tank level 20-80 % on a 60 s cycle);
 at t~15 a burst of `enip`/`modbus`/`s7comm` flows from `ews` to every PLC; at t=40 `plc-l33er` goes offline, returns
