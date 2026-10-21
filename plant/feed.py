@@ -6,18 +6,26 @@ stdlib only (own minimal RFC 6455 server, send-only), so it runs in WSL next to 
                                FrameBuilder(devices, segments, t0): .flow() .event() .patch() .online() .frame()
                                Sniffer(bridge, builder)
   replay a recorded run:       python plant/feed.py --replay plant/demo-run.jsonl.gz [--loop] [--port 8765]
+  ... and feed ReConnICS-ng:   add --reconnics http://127.0.0.1:8088 (POSTs captures/plant/*-before.pcap ~5 s after the first
+                               scenario sweep and *-after.pcap ~5 s after the last one, as replay time passes them)
+  pause / speed (replay only): clients send {"cmd":"pause"} {"cmd":"play"} {"cmd":"speed","x":0.5|1|2}; every frame carries paused, speed
+  upload after a live run:     python plant/feed.py --upload-only --reconnics http://127.0.0.1:8088
 """
 import argparse, base64, gzip, hashlib, json, os, socket, socketserver, struct, subprocess, sys, threading, time
+import urllib.error, urllib.parse, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import process
 
 WS_GUID = b"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
+SPEEDS = (0.5, 1, 2)                                           # replay speeds a client may ask for
+MAX_CLIENT_FRAME = 4096                                        # control messages are tiny; a bigger frame closes the connection
 
 
 class Feed:
     def __init__(self, port=8765, host="0.0.0.0"):
         self.addr, self.clients, self.lock, self.latest = (host, port), [], threading.Lock(), b"{}"
+        self.on_control = None                                 # replay() sets it; None (live plant) = control messages are ignored
 
     def start(self):
         feed = self
@@ -53,24 +61,41 @@ class Feed:
         s.settimeout(None)
         with self.lock:
             self.clients.append(s)
-        try:                                                   # we only send; read to notice close and answer ping
+        try:                                                   # we mostly send; read to notice close, answer ping, take control messages
             while True:
                 b0, b1 = self._rx(s, 2)
                 n = b1 & 0x7F
                 n = struct.unpack(">H", self._rx(s, 2))[0] if n == 126 else struct.unpack(">Q", self._rx(s, 8))[0] if n == 127 else n
-                mask = self._rx(s, 4) if b1 & 0x80 else b"\0" * 4
-                data = self._rx(s, n)
-                if b0 & 0x0F == 8:
-                    return
-                if b0 & 0x0F == 9:
+                if n > MAX_CLIENT_FRAME:
+                    return                                     # oversized: drop the client rather than buffer it
+                mask = self._rx(s, 4) if b1 & 0x80 else b"\0" * 4   # RFC 6455: client frames are masked
+                data = bytes(x ^ mask[i % 4] for i, x in enumerate(self._rx(s, n)))
+                op = b0 & 0x0F
+                if op == 8:                                    # close: echo it, then hang up
                     with self.lock:
-                        s.sendall(self._frame(10, bytes(x ^ mask[i % 4] for i, x in enumerate(data))))
+                        s.sendall(self._frame(8, data[:2]))
+                    return
+                if op == 9:
+                    with self.lock:
+                        s.sendall(self._frame(10, data))
+                elif op == 1 and b0 & 0x80:                    # one complete text message (fragments are ignored)
+                    self._control(data)
         except (OSError, EOFError):
             pass
         finally:
             with self.lock:
                 if s in self.clients:
                     self.clients.remove(s)
+
+    def _control(self, data):
+        """{"cmd":"pause"|"play"} or {"cmd":"speed","x":0.5|1|2}; anything else is ignored. Never raises."""
+        try:
+            m = json.loads(data.decode())
+            ok = m["cmd"] in ("pause", "play") or (m["cmd"] == "speed" and type(m.get("x")) in (int, float) and m["x"] in SPEEDS)
+            if ok and self.on_control:
+                self.on_control(m)
+        except Exception:                                      # bad JSON / wrong shape / callback trouble: drop the message, keep the feed
+            pass
 
     @staticmethod
     def _rx(s, n):
@@ -222,15 +247,100 @@ class Sniffer(threading.Thread):
         self.b.flow(src, dst, name, fc, wire)
 
 
-def replay(path, feed, loop=False, speed=1.0):
+HERE = os.path.dirname(os.path.abspath(__file__))
+SEGMENTS = ("cell1", "cell2", "sup")
+
+
+def upload_plan(scenario=None, lag=5.0):
+    """[(t, [pcap paths])]: *-before.pcap `lag` s after the first sweep in scenario.json, *-after.pcap after the last."""
+    sweeps = sorted(e["t"] for e in (scenario or json.load(open(os.path.join(HERE, "scenario.json"))))["events"] if e["do"] == "sweep")
+    caps = lambda tag: [os.path.join(HERE, "..", "captures", "plant", f"{s}-{tag}.pcap") for s in SEGMENTS]
+    return [(sweeps[0] + lag, caps("before")), (sweeps[-1] + lag, caps("after"))]
+
+
+def upload(base, path):
+    """POST one capture to a running ReConnICS-ng console. Logs one line; never raises (409 = already queued, e.g. on a loop)."""
+    name = os.path.basename(path)
+    try:
+        req = urllib.request.Request(f"{base.rstrip('/')}/api/v1/captures?name={urllib.parse.quote(name)}", data=open(path, "rb").read(),
+                                     method="POST", headers={"Content-Type": "application/octet-stream", "X-Actor": "plant-feed"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            msg = f"queued ({r.status})"
+    except urllib.error.HTTPError as e:
+        msg = "already there (409)" if e.code == 409 else f"failed (HTTP {e.code})"
+    except Exception as e:                                     # console down, file missing, ...: the feed keeps going
+        msg = f"failed ({e})"
+    print(f"reconnics: upload {name} -> {msg}", flush=True)
+
+
+def upload_all(base, paths):
+    for p in paths:                                            # sequential: the console analyses one capture at a time
+        upload(base, p)
+
+
+class Clock:
+    """Replay time in seconds: advances at `speed` x wall time, frozen while paused. Everything timed (frames, uploads) keys off it."""
+    def __init__(self, speed=1.0, now=time.monotonic):
+        self._now, self.pos, self.paused, self.speed, self.lock, self.changed = now, 0.0, False, speed, threading.Lock(), threading.Event()
+        self.w = now()
+
+    def get(self):
+        with self.lock:
+            return self.pos + (0 if self.paused else (self._now() - self.w) * self.speed)
+
+    def set(self, paused=None, speed=None):
+        with self.lock:
+            self.pos += 0 if self.paused else (self._now() - self.w) * self.speed
+            self.w = self._now()
+            self.paused = self.paused if paused is None else paused
+            self.speed = self.speed if speed is None else speed
+        self.changed.set()                                     # wakes replay() so it republishes the new state at once
+
+    def reset(self):
+        with self.lock:
+            self.pos, self.w = 0.0, self._now()
+
+
+def replay(path, feed, loop=False, speed=1.0, reconnics=None, clock=None):
     frames = [json.loads(l) for l in (gzip.open if path.endswith(".gz") else open)(path, "rt") if l.strip()]
     span = frames[-1]["t"] - frames[0]["t"] + 0.2
+    clock = clock or Clock(speed)
+    last = {}
+
+    def control(m):                                            # already validated by Feed._control
+        if m["cmd"] == "speed":
+            clock.set(speed=float(m["x"]))
+        else:
+            clock.set(paused=m["cmd"] == "pause")
+    feed.on_control = control
+
+    def publish(fr, **extra):
+        last.update(fr, replay=True, paused=clock.paused, speed=clock.speed, len=round(span, 1), **extra)
+        feed.publish(last)
+
+    def wait(target):                                          # block until replay time reaches `target`; paused: re-send the frame once a second
+        while True:
+            r = clock.get()
+            if r >= target and not clock.paused:
+                return
+            if clock.changed.is_set():                         # pause / play / speed from a client: show it everywhere now
+                clock.changed.clear()
+                if last:
+                    publish(dict(last), flows=[])
+            elif clock.paused and last:
+                publish(dict(last), flows=[])                  # new clients still get a frame; flows=[] so packets are not replayed
+            clock.changed.wait(1.0 if clock.paused else min(1.0, max(0.0, target - r) / clock.speed))
+
     n = 0
     while True:
-        t0, w0 = frames[0]["t"], time.time()
+        t0 = frames[0]["t"]
+        clock.reset()
+        plan = upload_plan() if reconnics else []
         for fr in frames:
-            time.sleep(max(0, (fr["t"] - t0) / speed - (time.time() - w0)))
-            feed.publish(dict(fr, t=round(fr["t"] + n * span, 3), replay=True))
+            wait(fr["t"] - t0)
+            while plan and fr["t"] - t0 >= plan[0][0]:        # replay time passed a sweep (+ lag): hand the pcaps to the console
+                threading.Thread(target=upload_all, args=(reconnics, plan.pop(0)[1]), daemon=True).start()
+            publish(fr, t=round(fr["t"] + n * span, 3), pos=round(fr["t"] - t0, 1))
         n += 1
         if not loop:
             print("replay done (last frame stays on GET /)", flush=True)
@@ -239,14 +349,24 @@ def replay(path, feed, loop=False, speed=1.0):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--replay", required=True, help="recorded run (.jsonl or .jsonl.gz) written by plant.py --record")
+    ap.add_argument("--replay", help="recorded run (.jsonl or .jsonl.gz) written by plant.py --record")
     ap.add_argument("--loop", action="store_true")
     ap.add_argument("--port", type=int, default=8765)
     ap.add_argument("--host", default="0.0.0.0")
     ap.add_argument("--speed", type=float, default=1.0)
+    ap.add_argument("--reconnics", metavar="URL", help="ReConnICS-ng console, e.g. http://127.0.0.1:8088: upload the before/after pcaps as the story passes each sweep")
+    ap.add_argument("--upload-only", action="store_true", help="upload captures/plant before then after pcaps to --reconnics now and exit (after a live run)")
     a = ap.parse_args()
+    if a.upload_only:
+        if not a.reconnics:
+            ap.error("--upload-only needs --reconnics URL")
+        for _, paths in upload_plan():
+            upload_all(a.reconnics, paths)
+        sys.exit(0)
+    if not a.replay:
+        ap.error("--replay FILE (or --upload-only) is required")
     fd = Feed(a.port, a.host)
     fd.start()
-    replay(a.replay, fd, a.loop, a.speed)
+    replay(a.replay, fd, a.loop, a.speed, a.reconnics)
     while True:
         time.sleep(3600)                                       # keep serving GET / and connected clients

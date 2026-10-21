@@ -12,6 +12,39 @@ export function field(rec, f) {                       // {value, conf, evidence}
   return value == null || value === '' ? null : { value: String(value), conf: x.confidence ?? null, evidence: x.evidence ?? null };
 }
 
+// Evidence strings are free text from reconnics-ng, e.g. "ethernet-ip ListIdentity vendorId=1, frame 573, txn session=0, ...".
+// Parsed defensively: label = protocol + message, frame = "573" or "21-1102"; either may be null (then show the raw text).
+const MESSAGES = [
+  [/ethernet-ip ListIdentity/i, () => 'ENIP ListIdentity'],
+  [/ethernet-ip CIP Get_Attributes_All/i, () => 'ENIP CIP Get_Attributes_All'],
+  [/modbus FC43\/14 Read Device Identification/i, () => 'Modbus FC43/14 Read Device Identification'],
+  [/s7comm SZL (0x[0-9a-f]+)(?: ([A-Za-z]+ [A-Za-z]+))?/i, m => `S7 SZL ${m[1]}${m[2] ? ' ' + m[2] : ''}`],
+];
+export function evidenceInfo(ev) {
+  const raw = String(ev ?? '').trim();
+  if (!raw) return null;
+  const fm = /\bframes? (\d+)(?:-(\d+))?/.exec(raw), hit = MESSAGES.map(([re, f]) => { const m = re.exec(raw); return m && f(m); }).find(Boolean);
+  return { label: hit || null, frame: fm ? (fm[2] ? `${fm[1]}-${fm[2]}` : fm[1]) : null, raw };
+}
+
+/** Pipeline facts for one record: the first identity field with evidence says which message/frame it was decoded from. */
+export function pipeline(rec) {
+  const ids = FIELDS.filter(f => f !== 'mac').map(f => ({ f, v: field(rec, f) })).filter(x => x.v);
+  const src = ids.map(x => evidenceInfo(x.v.evidence)).find(e => e?.label) ?? ids.map(x => evidenceInfo(x.v.evidence)).find(Boolean) ?? null;
+  const top = rec?.match?.advisories?.[0];
+  return { filled: ids.map(x => x.f), source: src, advisory: top ? { id: top.advisory, level: top.level } : null, level: rec?.match?.level ?? null };
+}
+
+/**
+ * Which capture an evidence frame number came from. The merged inventory does not record it, but identity ties go to the
+ * latest capture (reconnics-ng Inventory.LATEST_WINS), so take the latest finished capture long enough to hold that frame.
+ * ponytail: a guess when several late captures are long enough; the console naming the source capture per field would make it exact.
+ */
+export function captureFor(frame, captures = []) {
+  const n = parseInt(frame, 10);
+  return Number.isFinite(n) ? [...captures].reverse().find(c => c.state === 'done' && (c.summary?.frames ?? 0) >= n)?.file ?? null : null;
+}
+
 export function same(f, a, b) {
   const x = norm(a, f), y = norm(b, f);
   return LOOSE.has(f) ? !!x && !!y && (x.includes(y) || y.includes(x)) : x === y;

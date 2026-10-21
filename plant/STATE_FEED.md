@@ -1,7 +1,7 @@
 # Plant state feed (for the 3D viewer)
 
-`ws://localhost:8765/state`, text frames, one JSON object per frame, ~5 Hz (200 ms). Server-to-client only; anything the
-client sends is ignored. `GET http://localhost:8765/` returns the latest frame as JSON (curl / debugging).
+`ws://localhost:8765/state`, text frames, one JSON object per frame, ~5 Hz (200 ms). Server-to-client; the only client
+messages are the replay controls below (everything else is ignored). `GET http://localhost:8765/` returns the latest frame as JSON (curl / debugging).
 Reachable from Windows through WSL2 localhost forwarding (verified). stdlib only (`plant/feed.py`).
 
 Sources
@@ -11,12 +11,19 @@ Sources
 - **replay**: `python plant/feed.py --replay plant/demo-run.jsonl.gz [--loop] [--port 8765] [--speed 1]` streams a
   recorded run with the same schema, no WSL needed (`replay: true` is added to every frame; `t` stays monotonic across
   `--loop` iterations). Record a run with `plant.py --record FILE.jsonl.gz`.
+  Replay only, a client may send (text frames, masked as RFC 6455 requires): `{"cmd":"pause"}`, `{"cmd":"play"}`,
+  `{"cmd":"speed","x":0.5}` (x = 0.5, 1 or 2). Replay time (frames and the timed `--reconnics` uploads) stops while paused and runs at
+  `x` times wall speed; the new state is broadcast at once, so every viewer shows the same. A paused replay re-sends its last
+  frame (`flows: []`) once a second. The live plant has no clock: it ignores these messages and its frames carry none of the fields below.
 
 ## Frame
 
 ```jsonc
 {
   "t": 23.841,                       // seconds since plant start (replay: since recording start, + n*length when looping)
+  "replay": true, "paused": false,   // replay only: flag, and whether the replay clock is stopped
+  "speed": 1,                        // replay only: 0.5 | 1 | 2
+  "pos": 23.8, "len": 90.2,          // replay only: seconds into the current loop, and the loop length (for a 0:23 / 1:30 readout)
   "devices": [{
     "id": "plc-l33er",               // stable key; flows and events refer to it
     "ip": "10.10.2.10", "mac": "00:00:bc:00:01:0a",
