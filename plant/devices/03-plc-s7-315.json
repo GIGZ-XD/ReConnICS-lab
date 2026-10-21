@@ -1,0 +1,17 @@
+{
+ "name": "plc-s7-315",
+ "seg": "cell1",
+ "host": 12,
+ "oui": "siemens",
+ "kind": "s7native",
+ "process": {
+  "unit": "conveyor"
+ },
+ "_note": "snap7's native server answers SZL 0x0011/0x001C with a fixed S7-300 CPU 315-2 PN/DP identity",
+ "truth": {
+  "vendor": "Siemens",
+  "model": "6ES7 315-2EH14-0AB0",
+  "firmware": "3.2.6",
+  "role": "plc"
+ }
+}

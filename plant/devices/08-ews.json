@@ -1,0 +1,10 @@
+{
+ "name": "ews",
+ "seg": "sup",
+ "host": 21,
+ "oui": "dell",
+ "kind": "ews",
+ "truth": {
+  "role": "ews"
+ }
+}

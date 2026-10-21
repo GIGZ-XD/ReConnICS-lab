@@ -1,0 +1,30 @@
+{
+ "name": "plc-l33er",
+ "seg": "cell2",
+ "host": 10,
+ "oui": "rockwell",
+ "kind": "enip",
+ "process": {
+  "unit": "tank"
+ },
+ "_note": "cpppo ENIP: Product Revision word = major + 256*minor. scenario.json flashes 24.011 onto this device mid-run.",
+ "cip": {
+  "vendor": 1,
+  "devtype": 14,
+  "pc": 104,
+  "rev": [
+   20,
+   11
+  ],
+  "serial": 1625420962,
+  "status": 12640,
+  "name": "1769-L33ER/A LOGIX5333ER"
+ },
+ "truth": {
+  "vendor": "Rockwell Automation",
+  "model": "1769-L33ER",
+  "firmware": "20.011",
+  "serial": "60E1F4A2",
+  "role": "plc"
+ }
+}

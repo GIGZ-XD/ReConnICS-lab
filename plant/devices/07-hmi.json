@@ -1,0 +1,10 @@
+{
+ "name": "hmi",
+ "seg": "sup",
+ "host": 20,
+ "oui": "dell",
+ "kind": "hmi",
+ "truth": {
+  "role": "hmi"
+ }
+}

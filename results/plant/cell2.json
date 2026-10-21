@@ -1,0 +1,170 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "cell2.pcap",
+    "pcapSha256" : "67262a78f36f988e57cc177156b8bb2bfe987d2b36fa9d2ffe8cd85b949d4e48",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-20T18:34:45.767108Z",
+    "tcpReassembly" : {
+      "segments" : 597,
+      "pdus" : 597,
+      "retransmittedBytes" : 0,
+      "unframedSegments" : 0,
+      "gapsSkipped" : 0,
+      "overflowResets" : 0,
+      "flowsEvicted" : 0
+    }
+  },
+  "assets" : [ {
+    "id" : "10.10.2.1",
+    "ip" : "10.10.2.1",
+    "mac" : "00:1a:a1:00:01:01",
+    "protocols" : [ ],
+    "attributes" : {
+      "firstFrame" : 4,
+      "lastFrame" : 35,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  }, {
+    "id" : "10.10.2.10",
+    "ip" : "10.10.2.10",
+    "mac" : "00:00:bc:00:01:0a",
+    "protocols" : [ "ethernet-ip" ],
+    "ports" : [ "44818/tcp", "44818/udp" ],
+    "vendor" : {
+      "value" : "Rockwell Automation",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity vendorId=1, frame 168, txn session=0, mapped from ODVA CIP Vendor ID table"
+    },
+    "model" : {
+      "value" : "1769-L33ER/A LOGIX5333ER",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity productName, frame 168, txn session=0, deviceType=14 productCode=104"
+    },
+    "firmware" : {
+      "value" : "24.011",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip CIP Get_Attributes_All Identity revision, frame 730, txn session=3611947963 request frame 729, productCode=104"
+    },
+    "serial" : {
+      "value" : "60E1F4A2",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity serialNumber, frame 168, txn session=0, 0x60e1f4a2"
+    },
+    "deviceType" : {
+      "value" : "cip:0x0E",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity deviceType=14, frame 168, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+    },
+    "attributes" : {
+      "firstFrame" : 3,
+      "lastFrame" : 976,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "identityConflicts" : {
+        "firmware" : [ "20.011 (earlier, ethernet-ip ListIdentity revision, frame 168, txn session=0, productCode=104)" ]
+      },
+      "serialNumbers" : [ "60E1F4A2" ]
+    }
+  }, {
+    "id" : "10.10.2.11",
+    "ip" : "10.10.2.11",
+    "mac" : "00:00:bc:00:01:0b",
+    "protocols" : [ "ethernet-ip" ],
+    "ports" : [ "44818/tcp", "44818/udp" ],
+    "vendor" : {
+      "value" : "Rockwell Automation",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity vendorId=1, frame 184, txn session=0, mapped from ODVA CIP Vendor ID table"
+    },
+    "model" : {
+      "value" : "PowerFlex 525 1P 240V 2.2kW",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity productName, frame 184, txn session=0, deviceType=2 productCode=144"
+    },
+    "firmware" : {
+      "value" : "5.001",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip CIP Get_Attributes_All Identity revision, frame 746, txn session=753710161 request frame 745, productCode=144"
+    },
+    "serial" : {
+      "value" : "C07A2214",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity serialNumber, frame 184, txn session=0, 0xc07a2214"
+    },
+    "deviceType" : {
+      "value" : "cip:0x02",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity deviceType=2, frame 184, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+    },
+    "attributes" : {
+      "firstFrame" : 1,
+      "lastFrame" : 979,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "serialNumbers" : [ "C07A2214" ]
+    }
+  }, {
+    "id" : "10.10.2.12",
+    "ip" : "10.10.2.12",
+    "mac" : "00:80:f4:00:01:0c",
+    "protocols" : [ "modbus" ],
+    "ports" : [ "502/tcp" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 160, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "BMEP582040",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 160, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V2.70",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 714, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 2,
+      "lastFrame" : 973,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself" ]
+    }
+  }, {
+    "id" : "10.10.3.20",
+    "ip" : "10.10.3.20",
+    "protocols" : [ "modbus", "ethernet-ip" ],
+    "attributes" : {
+      "firstFrame" : 9,
+      "lastFrame" : 979,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:01:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.3.21",
+    "ip" : "10.10.3.21",
+    "protocols" : [ "modbus", "ethernet-ip" ],
+    "attributes" : {
+      "firstFrame" : 158,
+      "lastFrame" : 746,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:01:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.3.22",
+    "ip" : "10.10.3.22",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 14,
+      "lastFrame" : 952,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:01:01 seen with 4 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  } ]
+}

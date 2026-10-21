@@ -1,0 +1,24 @@
+{
+ "name": "plc-m340",
+ "seg": "cell1",
+ "host": 11,
+ "oui": "schneider",
+ "kind": "modbus",
+ "process": {
+  "unit": "tank"
+ },
+ "ident": {
+  "VendorName": "Schneider Electric",
+  "ProductCode": "BMXP342020",
+  "MajorMinorRevision": "V2.10",
+  "VendorUrl": "www.se.com",
+  "ProductName": "Modicon M340",
+  "ModelName": "BMXP342020"
+ },
+ "truth": {
+  "vendor": "Schneider Electric",
+  "model": "BMXP342020",
+  "firmware": "2.10",
+  "role": "plc"
+ }
+}

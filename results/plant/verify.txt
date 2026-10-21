@@ -1,0 +1,30 @@
+== results/plant/cell1.json
+  10.10.1.10   modbus    vendor=ok model=ok firmware=ok mac=ok role=server/plc
+  10.10.1.11   modbus    vendor=ok model=ok firmware=ok mac=ok role=server/plc
+  10.10.1.12   s7native  vendor=ok model=ok firmware=ok mac=ok role=server/plc
+  10.10.2.10   plc-l33er    not seen
+  10.10.2.11   drive-pf525  not seen
+  10.10.2.12   plc-m580     not seen
+  10.10.3.20   hmi       (client: no identity expected) mac=None role=client/hmi
+  10.10.3.21   ews       (client: no identity expected) mac=None role=client/ews
+  10.10.3.22   historian (client: no identity expected) mac=None role=client/historian
+== results/plant/cell2.json
+  10.10.1.10   plc-m221     not seen
+  10.10.1.11   plc-m340     not seen
+  10.10.1.12   plc-s7-315   not seen
+  10.10.2.10   enip      vendor=ok model=ok firmware=ok serial=ok mac=ok role=server/plc
+  10.10.2.11   enip      vendor=ok model=ok firmware=ok serial=ok mac=ok role=server/drive
+  10.10.2.12   modbus    vendor=ok model=ok firmware=ok mac=ok role=server/plc
+  10.10.3.20   hmi       (client: no identity expected) mac=None role=client/hmi
+  10.10.3.21   ews       (client: no identity expected) mac=None role=client/ews
+  10.10.3.22   historian (client: no identity expected) mac=None role=client/historian
+== results/plant/sup.json
+  10.10.1.10   modbus    vendor=ok model=ok firmware=ok mac=None role=server/plc
+  10.10.1.11   modbus    vendor=ok model=ok firmware=ok mac=None role=server/plc
+  10.10.1.12   s7native  vendor=ok model=ok firmware=ok mac=None role=server/plc
+  10.10.2.10   enip      vendor=ok model=ok firmware=ok serial=ok mac=None role=server/plc
+  10.10.2.11   enip      vendor=ok model=ok firmware=ok serial=ok mac=None role=server/drive
+  10.10.2.12   modbus    vendor=ok model=ok firmware=ok mac=None role=server/plc
+  10.10.3.20   hmi       (client: no identity expected) mac=ok role=client/hmi
+  10.10.3.21   ews       (client: no identity expected) mac=ok role=client/ews
+  10.10.3.22   historian (client: no identity expected) mac=ok role=client/historian

@@ -1,0 +1,3 @@
+[
+ {"at": "2026-10-20T10:42:07Z", "actor": "reconnics-ng", "asset": "10.10.2.10", "field": "firmware", "from": "20.011", "to": "24.011", "source": "capture sup-2 (SYNTHETIC: hand-written to show the change-log format; reconnics-ng does not emit this for capture-driven changes yet)"}
+]

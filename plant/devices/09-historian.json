@@ -1,0 +1,10 @@
+{
+ "name": "historian",
+ "seg": "sup",
+ "host": 22,
+ "oui": "vmware",
+ "kind": "historian",
+ "truth": {
+  "role": "historian"
+ }
+}

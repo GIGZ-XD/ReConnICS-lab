@@ -1,0 +1,266 @@
+{
+  "source" : {
+    "tool" : "reconnics-ng",
+    "version" : "0.1.0",
+    "pcap" : "sup.pcap",
+    "pcapSha256" : "e4d9af9079c6214b1c3772aff7b5a765266b5950520a57b2b3eaa92a0c73412c",
+    "format" : "CLASSIC_PCAP",
+    "executedAt" : "2026-10-20T18:34:46.971236200Z",
+    "tcpReassembly" : {
+      "segments" : 1265,
+      "pdus" : 1265,
+      "retransmittedBytes" : 0,
+      "unframedSegments" : 0,
+      "gapsSkipped" : 0,
+      "overflowResets" : 0,
+      "flowsEvicted" : 0
+    }
+  },
+  "assets" : [ {
+    "id" : "10.10.1.10",
+    "ip" : "10.10.1.10",
+    "protocols" : [ "modbus" ],
+    "ports" : [ "502/tcp" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 326, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "TM221CE16R",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 326, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V1.5.0.1",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 1470, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 9,
+      "lastFrame" : 2019,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself", "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.1.11",
+    "ip" : "10.10.1.11",
+    "protocols" : [ "modbus" ],
+    "ports" : [ "502/tcp" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 338, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "BMXP342020",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 338, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V2.10",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 1482, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 28,
+      "lastFrame" : 2022,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself", "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.1.12",
+    "ip" : "10.10.1.12",
+    "protocols" : [ "s7comm" ],
+    "ports" : [ "102/tcp" ],
+    "vendor" : {
+      "value" : "Siemens",
+      "confidence" : "MEDIUM",
+      "evidence" : "s7comm SZL 0x0011 Module Identification vendor from S7 context, frame 399, txn pduRef=256"
+    },
+    "model" : {
+      "value" : "6ES7 315-2EH14-0AB0",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x0011 Module Identification index=0x0001 entry=0, frame 399, txn pduRef=256, MlfB (order number)"
+    },
+    "firmware" : {
+      "value" : "V3.2.6",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x0011 Module Identification index=0x0007 entry=2, frame 1540, txn pduRef=256, Ausbg/Ausbe basic firmware"
+    },
+    "hostname" : {
+      "value" : "CPU 315-2 PN/DP",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0002, frame 401, txn pduRef=512, module name, entry=1"
+    },
+    "serial" : {
+      "value" : "S C-C2UR28922012",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0005, frame 401, txn pduRef=512, serial number, entry=4"
+    },
+    "deviceType" : {
+      "value" : "s7:CPU 315-2 PN/DP",
+      "confidence" : "HIGH",
+      "evidence" : "s7comm SZL 0x001C Component Identification index=0x0007, frame 401, txn pduRef=512, module type name, entry=5"
+    },
+    "attributes" : {
+      "firstFrame" : 83,
+      "lastFrame" : 2034,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ],
+      "serialNumbers" : [ "S C-C2UR28922012" ]
+    }
+  }, {
+    "id" : "10.10.2.10",
+    "ip" : "10.10.2.10",
+    "protocols" : [ "ethernet-ip" ],
+    "ports" : [ "44818/tcp", "44818/udp" ],
+    "vendor" : {
+      "value" : "Rockwell Automation",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity vendorId=1, frame 358, txn session=0, mapped from ODVA CIP Vendor ID table"
+    },
+    "model" : {
+      "value" : "1769-L33ER/A LOGIX5333ER",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity productName, frame 358, txn session=0, deviceType=14 productCode=104"
+    },
+    "firmware" : {
+      "value" : "24.011",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip CIP Get_Attributes_All Identity revision, frame 1510, txn session=3611947963 request frame 1509, productCode=104"
+    },
+    "serial" : {
+      "value" : "60E1F4A2",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity serialNumber, frame 358, txn session=0, 0x60e1f4a2"
+    },
+    "deviceType" : {
+      "value" : "cip:0x0E",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity deviceType=14, frame 358, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+    },
+    "attributes" : {
+      "firstFrame" : 65,
+      "lastFrame" : 2028,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ],
+      "identityConflicts" : {
+        "firmware" : [ "20.011 (earlier, ethernet-ip ListIdentity revision, frame 358, txn session=0, productCode=104)" ]
+      },
+      "serialNumbers" : [ "60E1F4A2" ]
+    }
+  }, {
+    "id" : "10.10.2.11",
+    "ip" : "10.10.2.11",
+    "protocols" : [ "ethernet-ip" ],
+    "ports" : [ "44818/tcp", "44818/udp" ],
+    "vendor" : {
+      "value" : "Rockwell Automation",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity vendorId=1, frame 374, txn session=0, mapped from ODVA CIP Vendor ID table"
+    },
+    "model" : {
+      "value" : "PowerFlex 525 1P 240V 2.2kW",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity productName, frame 374, txn session=0, deviceType=2 productCode=144"
+    },
+    "firmware" : {
+      "value" : "5.001",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip CIP Get_Attributes_All Identity revision, frame 1526, txn session=753710161 request frame 1525, productCode=144"
+    },
+    "serial" : {
+      "value" : "C07A2214",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity serialNumber, frame 374, txn session=0, 0xc07a2214"
+    },
+    "deviceType" : {
+      "value" : "cip:0x02",
+      "confidence" : "HIGH",
+      "evidence" : "ethernet-ip ListIdentity deviceType=2, frame 374, txn session=0, CIP Identity attribute 2 (ODVA device profile)"
+    },
+    "attributes" : {
+      "firstFrame" : 74,
+      "lastFrame" : 2031,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ],
+      "serialNumbers" : [ "C07A2214" ]
+    }
+  }, {
+    "id" : "10.10.2.12",
+    "ip" : "10.10.2.12",
+    "protocols" : [ "modbus" ],
+    "ports" : [ "502/tcp" ],
+    "vendor" : {
+      "value" : "Schneider Electric",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x00, frame 350, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "model" : {
+      "value" : "BMEP582040",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x01, frame 350, txn 1, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "firmware" : {
+      "value" : "V2.70",
+      "confidence" : "HIGH",
+      "evidence" : "modbus FC43/14 Read Device Identification objectId=0x02, frame 1494, txn 2, unit=1 conformity=0x83 moreFollows=0 next=0x0"
+    },
+    "attributes" : {
+      "firstFrame" : 47,
+      "lastFrame" : 2025,
+      "detectionBases" : [ "HEADER_VALIDATED", "MESSAGE_DECODED" ],
+      "role" : "server",
+      "mergeNotes" : [ "Modbus unit 1 is the only unit answering FC43; identity attributed to the device itself", "MAC 00:1a:a1:00:02:01 seen with 7 IPs (router/gateway interface); not bound to this IP" ]
+    }
+  }, {
+    "id" : "10.10.3.1",
+    "ip" : "10.10.3.1",
+    "mac" : "00:1a:a1:00:02:01",
+    "protocols" : [ ],
+    "attributes" : {
+      "firstFrame" : 5,
+      "lastFrame" : 1657,
+      "detectionBases" : [ "HEADER_VALIDATED" ]
+    }
+  }, {
+    "id" : "10.10.3.20",
+    "ip" : "10.10.3.20",
+    "mac" : "00:14:22:00:02:14",
+    "protocols" : [ "modbus", "ethernet-ip", "s7comm" ],
+    "attributes" : {
+      "firstFrame" : 3,
+      "lastFrame" : 2034,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client"
+    }
+  }, {
+    "id" : "10.10.3.21",
+    "ip" : "10.10.3.21",
+    "mac" : "00:14:22:00:02:15",
+    "protocols" : [ "modbus", "ethernet-ip", "s7comm" ],
+    "attributes" : {
+      "firstFrame" : 2,
+      "lastFrame" : 1656,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client"
+    }
+  }, {
+    "id" : "10.10.3.22",
+    "ip" : "10.10.3.22",
+    "mac" : "00:0c:29:00:02:16",
+    "protocols" : [ "modbus" ],
+    "attributes" : {
+      "firstFrame" : 1,
+      "lastFrame" : 1980,
+      "detectionBases" : [ "HEADER_VALIDATED" ],
+      "role" : "client"
+    }
+  } ]
+}

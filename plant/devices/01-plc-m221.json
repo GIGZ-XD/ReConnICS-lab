@@ -1,0 +1,24 @@
+{
+ "name": "plc-m221",
+ "seg": "cell1",
+ "host": 10,
+ "oui": "schneider",
+ "kind": "modbus",
+ "process": {
+  "unit": "conveyor"
+ },
+ "ident": {
+  "VendorName": "Schneider Electric",
+  "ProductCode": "TM221CE16R",
+  "MajorMinorRevision": "V1.5.0.1",
+  "VendorUrl": "www.se.com",
+  "ProductName": "Modicon M221",
+  "ModelName": "TM221CE16R"
+ },
+ "truth": {
+  "vendor": "Schneider Electric",
+  "model": "TM221CE16R",
+  "firmware": "1.5.0.1",
+  "role": "plc"
+ }
+}

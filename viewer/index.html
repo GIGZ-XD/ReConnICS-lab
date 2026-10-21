@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReConnICS 3D Plant</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+</head>
+<body>
+<header id="top">
+  <h1>ReConnICS <span>3D plant</span></h1>
+  <span id="badge" class="badge wait" role="status">connecting...</span>
+  <nav id="presets" aria-label="Camera presets">
+    <button data-view="overview" title="Key 1">Overview</button>
+    <button data-view="cell1" title="Key 2">Cell 1</button>
+    <button data-view="cell2" title="Key 3">Cell 2</button>
+    <button data-view="control" title="Key 4">Control room</button>
+    <button data-view="hero" class="heroBtn" title="Key 5">L33ER cabinet</button>
+  </nav>
+  <span class="grow"></span>
+  <button id="labelsBtn" aria-pressed="true" title="Key L">Labels</button>
+  <button id="restartBtn" hidden>Restart demo</button>
+  <ul id="legend" aria-label="Packet colours">
+    <li><i style="background:#4aa3ff"></i>Modbus</li><li><i style="background:#ffa31a"></i>ENIP</li><li><i style="background:#4cd964"></i>S7</li>
+    <li><i class="id"></i>Identity request</li>
+  </ul>
+</header>
+<aside id="devlist" aria-label="Devices"><h2>Devices</h2><ul id="devbtns"></ul>
+  <p class="hint">Click a device in 3D or pick it here. Keys: 1-5 views, L labels, Esc deselect, Up/Down in list.</p></aside>
+<main id="stage"><div id="view"></div><ol id="events" aria-live="polite" aria-label="Plant events"></ol></main>
+<aside id="panel" aria-live="polite"><p class="hint">Select a device.</p></aside>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

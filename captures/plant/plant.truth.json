@@ -1,0 +1,159 @@
+{
+ "scenario": "plant",
+ "description": "netns plant: cell1=10.10.1.0/24; cell2=10.10.2.0/24; sup=10.10.3.0/24",
+ "files": [
+  "cell1.pcap",
+  "cell2.pcap",
+  "sup.pcap"
+ ],
+ "events": [
+  {
+   "t": 15,
+   "do": "sweep"
+  },
+  {
+   "t": 40,
+   "do": "firmware",
+   "device": "plc-l33er",
+   "down_s": 5,
+   "cip": {
+    "rev": [
+     24,
+     11
+    ]
+   },
+   "firmware": "24.011"
+  },
+  {
+   "t": 65,
+   "do": "sweep"
+  }
+ ],
+ "devices": [
+  {
+   "id": "10.10.1.10",
+   "name": "plc-m221",
+   "ip": "10.10.1.10",
+   "segment": "cell1",
+   "mac": "00:80:f4:00:00:0a",
+   "kind": "modbus",
+   "vendor": "Schneider Electric",
+   "model": "TM221CE16R",
+   "firmware": "1.5.0.1",
+   "role": "plc"
+  },
+  {
+   "id": "10.10.1.11",
+   "name": "plc-m340",
+   "ip": "10.10.1.11",
+   "segment": "cell1",
+   "mac": "00:80:f4:00:00:0b",
+   "kind": "modbus",
+   "vendor": "Schneider Electric",
+   "model": "BMXP342020",
+   "firmware": "2.10",
+   "role": "plc"
+  },
+  {
+   "id": "10.10.1.12",
+   "name": "plc-s7-315",
+   "ip": "10.10.1.12",
+   "segment": "cell1",
+   "mac": "00:1b:1b:00:00:0c",
+   "kind": "s7native",
+   "vendor": "Siemens",
+   "model": "6ES7 315-2EH14-0AB0",
+   "firmware": "3.2.6",
+   "role": "plc"
+  },
+  {
+   "id": "10.10.2.10",
+   "name": "plc-l33er",
+   "ip": "10.10.2.10",
+   "segment": "cell2",
+   "mac": "00:00:bc:00:01:0a",
+   "kind": "enip",
+   "vendor": "Rockwell Automation",
+   "model": "1769-L33ER",
+   "firmware": "24.011",
+   "serial": "60E1F4A2",
+   "role": "plc",
+   "firmware_initial": "20.011",
+   "firmware_history": [
+    {
+     "t": 47.1,
+     "firmware": "24.011"
+    }
+   ]
+  },
+  {
+   "id": "10.10.2.11",
+   "name": "drive-pf525",
+   "ip": "10.10.2.11",
+   "segment": "cell2",
+   "mac": "00:00:bc:00:01:0b",
+   "kind": "enip",
+   "vendor": "Rockwell Automation",
+   "model": "PowerFlex 525",
+   "firmware": "5.001",
+   "serial": "C07A2214",
+   "role": "drive"
+  },
+  {
+   "id": "10.10.2.12",
+   "name": "plc-m580",
+   "ip": "10.10.2.12",
+   "segment": "cell2",
+   "mac": "00:80:f4:00:01:0c",
+   "kind": "modbus",
+   "vendor": "Schneider Electric",
+   "model": "BMEP582040",
+   "firmware": "2.70",
+   "role": "plc"
+  },
+  {
+   "id": "10.10.3.20",
+   "name": "hmi",
+   "ip": "10.10.3.20",
+   "segment": "sup",
+   "mac": "00:14:22:00:02:14",
+   "kind": "hmi",
+   "role": "hmi"
+  },
+  {
+   "id": "10.10.3.21",
+   "name": "ews",
+   "ip": "10.10.3.21",
+   "segment": "sup",
+   "mac": "00:14:22:00:02:15",
+   "kind": "ews",
+   "role": "ews"
+  },
+  {
+   "id": "10.10.3.22",
+   "name": "historian",
+   "ip": "10.10.3.22",
+   "segment": "sup",
+   "mac": "00:0c:29:00:02:16",
+   "kind": "historian",
+   "role": "historian"
+  }
+ ],
+ "routers": [
+  {
+   "ip": "10.10.1.1",
+   "mac": "00:1a:a1:00:00:01",
+   "segment": "cell1"
+  },
+  {
+   "ip": "10.10.2.1",
+   "mac": "00:1a:a1:00:01:01",
+   "segment": "cell2"
+  },
+  {
+   "ip": "10.10.3.1",
+   "mac": "00:1a:a1:00:02:01",
+   "segment": "sup"
+  }
+ ]
+}
