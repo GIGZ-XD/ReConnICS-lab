@@ -44,8 +44,22 @@ and a ReConnICS-ng build to analyze the captures.
 cd viewer; python -m http.server 8123    # open http://localhost:8123/ (falls back to built-in demo data)
 ```
 
-Then analyze the captures with ReConnICS-ng, or upload `captures\plant\cell2-before.pcap` and `cell2-after.pcap` to its
-site console. The full step-by-step demo with expected output is [`plant/DEMO.md`](plant/DEMO.md).
+### Demo with the live ReConnICS-ng console
+
+The viewer can read a running ReConnICS-ng site console, so the "ReConnICS-ng (from pcap)" column fills in while the story
+plays. It needs the console's `--allow-origin` flag ([ReConnICS-ng PR #14](https://github.com/Skoelle18/ReConnICS-ng/pull/14)).
+
+```powershell
+# terminal 1, ReConnICS-ng repo (fresh --data dir for every demo)
+java -jar target\reconnics-ng.jar serve --index data\index.json --pubkey keys\index-signing.pub --data data\site-demo --allow-origin http://localhost:8123
+# terminal 2, this repo: replay the plant and upload the pcaps to the console as each sweep passes
+.\plant\demo.ps1 -Replay -ReconnICS http://127.0.0.1:8088
+# terminal 3
+cd viewer; python -m http.server 8123
+# open http://localhost:8123/?reconnics=http://127.0.0.1:8088 and select the L33ER (Demo device)
+```
+
+The full step-by-step demo with expected output is [`plant/DEMO.md`](plant/DEMO.md).
 
 ## Verify
 
